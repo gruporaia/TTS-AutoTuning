@@ -59,7 +59,7 @@ streamlit run app.py
 ```
 
 ## 📷 Interface e Funcionalidades
- ![Image](https://www.linkedin.com/in/lucas-de-souza-brandão-590b1228b/)
+ ![Image](https://github.com/user-attachments/assets/3edadd51-ea6e-449b-b6a6-78e29286ce38)
 
 ## Próximos Passos
 - Adicionar pré-processador de datasets em outras línguas.
