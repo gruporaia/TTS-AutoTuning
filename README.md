@@ -58,7 +58,7 @@ conda activate app
 streamlit run app.py
 ```
 
-## 📷 Exemplo de Detecção
+## 📷 Interface e Funcionalidades
  ![Image](https://www.linkedin.com/in/lucas-de-souza-brandão-590b1228b/)
 
 ## Próximos Passos
@@ -69,10 +69,10 @@ streamlit run app.py
 ---
  ## Organização responsável 
  ### RAIA - Rede de Avanço em Inteligência Artificial 
-- [Antonio Carlos](https://www.linkedin.com/in/lucas-de-souza-brandão-590b1228b/) 
-- [Arthur Trottmann](https://www.linkedin.com/in/lucas-de-souza-brandão-590b1228b/) 
-- [Caio Petroncini](https://www.linkedin.com/in/lucas-de-souza-brandão-590b1228b/) 
+- [Antonio Carlos](https://www.linkedin.com/in/ant%C3%B4nio-carlos-micheli-b10bb4289/) 
+- [Arthur Trottmann](https://www.linkedin.com/in/arthur-ramos-9b81b9201/) 
+- [Caio Petroncini](https://www.linkedin.com/in/caio-petroncini-7105941aa/) 
 - [Lucas Brandão](https://www.linkedin.com/in/lucas-de-souza-brandão-590b1228b/) 
-- [Pedro Soares](https://www.linkedin.com/in/lucas-de-souza-brandão-590b1228b/) 
-- 💡 Projeto em parceria com o [Professor Moacir Antonelli Ponti](https://www.linkedin.com/in/lucas-de-souza-brandão-590b1228b/)
+- [Pedro Soares](https://www.linkedin.com/in/pedro-soares-b3625b238/) 
+- 💡 Projeto em parceria com o [Professor Moacir Antonelli Ponti](https://www.linkedin.com/in/moacir-antonelli-ponti/)
 
