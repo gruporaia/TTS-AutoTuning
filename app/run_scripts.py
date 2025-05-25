@@ -3,6 +3,16 @@ import csv
 import tempfile
 from pathlib import Path
 import sys, importlib
+import os
+
+sys.path.append(os.path.abspath('../scripts/xTTS-v2'))
+from finetune import finetune as xtts_finetune
+from synthesize import synthesize as xtts_synthesize
+
+sys.path.append(os.path.abspath('../scripts/orpheusTTS'))
+from train_tuning import finetune as orpheus_finetune
+from inference_tuning import synthesize as orpheus_synthesize
+
 '''
 Função para realizar finetune de um modelo
 Recebe:
@@ -13,18 +23,19 @@ Recebe:
     - Tipo de input
 '''
 def finetune(model_name, model_to_tuning, duration_to_tuning, learning_to_tuning, inputType):
+
     if inputType == "audio":
         input_path = '../data/audio_transcription'
     else:
         input_path = f'../data/audio_transcription/{model_name}'
     output_path = f'../data/modelos/{model_name}'
 
-    result = subprocess.run(
-        [f"../scripts/{model_to_tuning}/finetune.sh", input_path, output_path, duration_to_tuning, learning_to_tuning, inputType],
-        check=True,
-        capture_output=True,
-        text=True
-    )
+    if model_to_tuning == "xTTS-v2":
+        print("Entrou no xTTS-v2")
+        result = xtts_finetune(input_path, output_path, duration_to_tuning, learning_to_tuning)
+    elif model_to_tuning == "orpheusTTS":
+        print("Entrou no Orpheus")
+        result = orpheus_finetune(input_path, output_path, duration_to_tuning, learning_to_tuning, inputType)
 
     with open("../data/models.csv", "a") as csv_modelos:
         csv_writer = csv.writer(csv_modelos, delimiter=',')
@@ -32,28 +43,6 @@ def finetune(model_name, model_to_tuning, duration_to_tuning, learning_to_tuning
 
     print(result)
     return result
-
-#### função de avaliação do modelo após finetune
-# só um placeholder até script the avaliação for adicionado
-def model_eval(model_path: str):
-    sample_text = "Testando ajuste fino de modelo. O rato roeu a roupa do rei de roma. Testando 1 2 3"
-
-    # gera áudio com modelo para ser avaliado
-    synthesize(sample_text, model_path)
-    output_path = '../data/gen'
-
-    # chama função de avaliação
-
-    '''
-    result = subprocess.run(
-        [f"Endereço do .sh de avaliação", sample_text, output_path],
-        check=True,
-        capture_output=True,
-        text=True
-    )
-    '''
-
-    return
 
 '''
 Função para sintetizar um áudio usando um dos modelos listados
@@ -65,47 +54,16 @@ Recebe:
 def synthesize(text: str, model_path: str, model_type: str):
     input_path = model_path
     output_path = '../data/gen'
-
-    result = subprocess.run(
-        [f"../scripts/{model_type}/synthesize.sh", input_path, output_path, text],
-        check=True,
-        capture_output=True,
-        text=True
-    )
-
-    print(result)
-
     audio_path = ""
 
     if model_type == "xTTS-v2":
+        xtts_synthesize(input_path, output_path, text)
         audio_path = f"{output_path}/output.wav"
-    else:
+    elif model_type == "orpheusTTS":
+        orpheus_synthesize(input_path, output_path, text)
         audio_path = f"{output_path}/OutputTTSOrpheus.wav"
 
     return audio_path
-
-
-'''
-Função para gerar áudio utilizado modelo base do Orpheus
-Recebe:
-    - Texto do áudio desejado
-    - Trancrição da amostra de áudio
-    - Áudio de referência
-'''
-def inference_pretrained(text, transcript, audio_sample_path):
-    output_path = '../data/gen'
-
-    result = subprocess.run(
-        ["../scripts/orpheusTTS/pre_trained.sh", audio_sample_path, output_path, text, transcript],
-        check=True,
-        capture_output=False,
-        text=True
-    )
-
-    audio_path = f"{output_path}/outputPretrainedOrpheus.wav"
-    return audio_path
-
-
 
 def evaluate_audio_metrics(
     audio_path: str | Path,

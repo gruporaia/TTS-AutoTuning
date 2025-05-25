@@ -7,6 +7,9 @@ import zipfile
 import pandas as pd
 from TTS_Utils import UTMOS, SECS, CER, build_dataset, normalize_text
 
+sys.path.append(os.path.abspath('../scripts/orpheusTTS'))
+from pre_trained import synthesize as orpheus_pre_trained
+
 # ─────────────── page config ───────────────
 st.set_page_config(
     page_title="Fine-tune & Generate Audio",
@@ -83,20 +86,20 @@ def fake_progress():
 
 
 # criar csv com dados do modelos
-with open("models.csv", "w") as f:
-    csv_writer = csv.writer(f, delimiter=",")
-    csv_writer.writerow(["nome", "path", "model_type", "score"])
-    pasta_modelos = "../data/modelos"
-    os.makedirs(pasta_modelos, exist_ok=True)
-    models = [
-        (nome, 
-        os.path.join(pasta_modelos, nome), 
-        "xTTs-v2" if any(f.endswith(".pth") for f in os.listdir(os.path.join(pasta_modelos, nome))) else "orpheusTTS", # confere se é um modelo xtts ou orpheus dependendo da terminação do arquivo do modelo
-        0.0)
-        for nome in os.listdir(pasta_modelos)
-    ]
-    for modelo in models:
-        csv_writer.writerow(modelo)
+# with open("models.csv", "w") as f:
+#     csv_writer = csv.writer(f, delimiter=",")
+#     csv_writer.writerow(["nome", "path", "model_type", "score"])
+#     pasta_modelos = "../data/modelos"
+#     os.makedirs(pasta_modelos, exist_ok=True)
+#     models = [
+#         (nome, 
+#         os.path.join(pasta_modelos, nome), 
+#         "xTTs-v2" if any(f.endswith(".pth") for f in os.listdir(os.path.join(pasta_modelos, nome))) else "orpheusTTS", # confere se é um modelo xtts ou orpheus dependendo da terminação do arquivo do modelo
+#         0.0)
+#         for nome in os.listdir(pasta_modelos)
+#     ]
+#     for modelo in models:
+#         csv_writer.writerow(modelo)
     
 
 # ─────────────── UI ───────────────
@@ -211,27 +214,27 @@ models_type = {} # Se o modelo é o xtts ou orpheus
 
 pasta_modelos = "../data/modelos"
 
-# for nome in os.listdir(pasta_modelos):
-#     path = os.path.join(pasta_modelos, nome)
-#     if not os.path.isdir(path):
-#         continue
-#     files = os.listdir(path)
-#     if any(f.endswith(".pth") for f in files):
-#         tipo = "xTTS-v2"
-#     else:
-#         tipo = "orpheusTTS"
+for nome in os.listdir(pasta_modelos):
+    path = os.path.join(pasta_modelos, nome)
+    if not os.path.isdir(path):
+        continue
+    files = os.listdir(path)
+    if any(f.endswith(".pth") for f in files):
+        tipo = "xTTS-v2"
+    else:
+        tipo = "orpheusTTS"
     
-#     models[nome] = path
-#     models_type[nome] = tipo
+    models[nome] = path
+    models_type[nome] = tipo
 
 #carrega opções de modelo do csv
-with open("models.csv") as csv_modelos:
-    csv_reader = csv.reader(csv_modelos, delimiter=',')
-    next(csv_reader) #cabecalho
-    for row in csv_reader:
-        models[row[0].strip()] = row[1].strip()
-        models_type[row[0].strip()] = row[2].strip()
-        #model_evals[row[0].strip()] = row[3].strip()
+# with open("models.csv") as csv_modelos:
+#     csv_reader = csv.reader(csv_modelos, delimiter=',')
+#     next(csv_reader) #cabecalho
+#     for row in csv_reader:
+#         models[row[0].strip()] = row[1].strip()
+#         models_type[row[0].strip()] = row[2].strip()
+#         #model_evals[row[0].strip()] = row[3].strip()
 
 
 ###### Inferência de modelos
@@ -294,7 +297,8 @@ if st.button("Gerar Áudio", key="generate_audio"):
 
             # Orpheus Pré-treinado
             if model_select == "OrpheusTTS" and sample_audio_path:
-                audio_path = run.inference_pretrained(normalized_text, normalized_transcript, sample_audio_path)
+                output_path = '../data/gen'
+                audio_path = orpheus_pre_trained(sample_audio_path, output_path, normalized_text, normalized_transcript)
             # xTTS pré-treinado
             elif model_select == "XTTS_v2.0_original_model_files" and sample_audio_path: # garante que a amostra foi enviada
                 audio_path = run.synthesize(normalized_text, models[model_select], models_type[model_select])
