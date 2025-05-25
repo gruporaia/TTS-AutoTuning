@@ -95,7 +95,7 @@ with open("models.csv", "w") as f:
     ]
     for modelo in models:
         csv_writer.writerow(modelo)
-    
+      
 
 # ─────────────── UI ───────────────
 ###### Fine-tuning
@@ -205,6 +205,7 @@ models_type = {} # Se o modelo é o xtts ou orpheus
 
 pasta_modelos = "../data/modelos"
 
+# VERSÃO SEM CSV
 # for nome in os.listdir(pasta_modelos):
 #     path = os.path.join(pasta_modelos, nome)
 #     if not os.path.isdir(path):
@@ -296,7 +297,7 @@ if st.button("Gerar Áudio", key="generate_audio"):
             elif model_select != "XTTS_v2.0_original_model_files":
                 audio_path = run.synthesize(normalized_text, models[model_select], models_type[model_select])
 
-        if audio_path:
+        if  audio_path:
             with open(audio_path, "rb") as audio_arquivo:
                 audio_bytes = audio_arquivo.read()
 

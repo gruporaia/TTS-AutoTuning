@@ -2,7 +2,8 @@ import subprocess
 import csv
 import tempfile
 from pathlib import Path
-import sys, importlib
+import sys
+import metrics
 '''
 Função para realizar finetune de um modelo
 Recebe:
@@ -89,6 +90,8 @@ Função para normalizar um texto
 Recebe:
     - Texto para ser normalizado
 '''
+
+'''
 def normalization(text):
     with tempfile.NamedTemporaryFile(mode='w+', delete=False) as temp:
         temp.write(text)
@@ -108,6 +111,8 @@ def normalization(text):
         result_content = f.read()
 
     return result_content
+
+'''
 
 '''
 Função para transcrever áudio e gerar um dataset
@@ -152,29 +157,22 @@ def inference_pretrained(text, transcript, audio_sample_path):
 
 
 def evaluate_audio_metrics(
-    audio_path: str | Path,
-    reference_text: str,
-    sample_audio_path: str | Path | None = None,
-    *,
-    lang: str = "pt",
+  
 ) -> dict[str, float | str]:
     """
     Returns a dict with UTMOS, CER and SECS
     (SECS is "N/A" if no reference sample is given).
+
+    '''  audio_path: str | Path,
+    reference_text: str,
+    sample_audio_path: str | Path | None = None,
+    *,
+    lang: str = "pt",''''
     """
 
-    ## Go from /app/ to project root
-    project_root = Path(__file__).resolve().parents[1]
+    
 
-    # Path to the folder containing metrics.py
-    metrics_folder = project_root / "scripts" / "metrics"
-
-    if str(metrics_folder) not in sys.path:
-        sys.path.append(str(metrics_folder))
-
-    # Load the metrics module
-    metrics = importlib.import_module("metrics")
-
+    print(metrics.__file__)
     utmos_score = float(metrics.UTMOS(audio_path))
     cer_score = float(metrics.CER(audio_path, reference_text, lang=lang))
 
