@@ -4,6 +4,7 @@ import tempfile
 from pathlib import Path
 import sys, importlib
 import os
+from TTS_Utils import UTMOS, SECS, CER
 
 sys.path.append(os.path.abspath('../scripts/xTTS-v2'))
 from finetune import finetune as xtts_finetune
@@ -81,14 +82,12 @@ def evaluate_audio_metrics(
     lang: str = "pt",''''
     """
 
-    
 
-    print(metrics.__file__)
-    utmos_score = float(metrics.UTMOS(audio_path))
-    cer_score = float(metrics.CER(audio_path, reference_text, lang=lang))
+    utmos_score = float(UTMOS(audio_path))
+    cer_score = float(CER(audio_path, reference_text, lang=lang))
 
     secs_score = (
-        float(metrics.SECS(sample_audio_path, audio_path))
+        float(SECS(sample_audio_path, audio_path))
         if sample_audio_path else "N/A"
     )
 
