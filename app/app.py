@@ -2,15 +2,17 @@ import streamlit as st
 import sys
 import time
 from TTS_Utils import UTMOS, SECS, CER, build_dataset, normalize_text
-import run_scripts as run
 import os
 import csv
 import zipfile
 import pandas as pd
 
-sys.path.append(os.path.abspath('../scripts/orpheusTTS'))
+orpheus_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'scripts', 'orpheusTTS'))
+if orpheus_path not in sys.path:
+    sys.path.insert(0, orpheus_path)
 from pre_trained import synthesize as orpheus_pre_trained
 
+import run_scripts as run
 # ─────────────── page config ───────────────
 st.set_page_config(
     page_title="Fine-tune & Generate Audio",

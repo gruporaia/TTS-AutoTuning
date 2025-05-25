@@ -6,11 +6,16 @@ import sys, importlib
 import os
 from TTS_Utils import UTMOS, SECS, CER
 
-sys.path.append(os.path.abspath('../scripts/xTTS-v2'))
+xtts_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'scripts', 'xTTS-v2'))
+if xtts_path not in sys.path:
+    sys.path.insert(0, xtts_path)
+
 from finetune import finetune as xtts_finetune
 from synthesize import synthesize as xtts_synthesize
 
-sys.path.append(os.path.abspath('../scripts/orpheusTTS'))
+orpheus_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'scripts', 'orpheusTTS'))
+if orpheus_path not in sys.path:
+    sys.path.insert(0, orpheus_path)
 from train_tuning import finetune as orpheus_finetune
 from inference_tuning import synthesize as orpheus_synthesize
 
