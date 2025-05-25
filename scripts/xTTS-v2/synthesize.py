@@ -53,9 +53,3 @@ def synthesize(run_path=None, output_path=None, text=None):
 
     torchaudio.save(output_path, torch.tensor(outputs['wav']).unsqueeze(0), 24000)
 
-if __name__ == "__main__":
-    run_path = sys.argv[1]
-    output_path = sys.argv[2]
-    text = sys.argv[3]
-    synthesize(run_path, output_path, text)
-

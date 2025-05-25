@@ -14,6 +14,8 @@ from trainer import Trainer, TrainerArgs
 
 def finetune(dataset_path: str, output_path: str, epochs: int, lr:int):
 
+    print("ENTREIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
+
     # Logging parameters
     RUN_NAME = "XTTSV2"
     PROJECT_NAME = "VOICESYNTH"
@@ -252,22 +254,3 @@ def finetune(dataset_path: str, output_path: str, epochs: int, lr:int):
     shutil.rmtree(script_output_path, ignore_errors=True)
 
     return OUT_PATH + most_recent.name
-
-
-
-
-if __name__ == "__main__":
-    # input_path = sys.argv[1]
-    # output_path = sys.argv[2]
-    # epochs = sys.argv[3]
-    # lr = sys.argv[4]
-    # inputType = sys.argv[5]
-    model_name = "Bombril"
-    input_path = '../data/audio_transcription'
-    output_path = f"../data/models/{model_name}"
-    epochs = 70
-    lr = 5e-6
-
-    out = finetune(input_path, output_path, epochs, lr)
-    
-    print(out)

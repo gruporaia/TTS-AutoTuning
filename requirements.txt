@@ -1,11 +1,10 @@
 git+https://github.com/gruporaia/TTS-Utils.git
+git+https://github.com/idiap/coqui-ai-TTS.git
 datasets==3.6.0
 ipython==8.12.3
 scikit_learn==1.6.1
 snac==1.2.1
 soundfile==0.13.1
 streamlit==1.41.1
-trainer==0.0.36
 transformers==4.51.3
-TTS==0.22.0
 unsloth==2025.5.7
