@@ -1,6 +1,1 @@
 nome,path,model_type,score
-XTTS_v2.0_original_model_files,../data/modelos/XTTS_v2.0_original_model_files,xTTs-v2,0.0
-EliseModel,../data/modelos/EliseModel,orpheusTTS,0.0
-OrpheusTTS,../data/modelos/OrpheusTTS,orpheusTTS,0.0
-JohnModel,../data/modelos/JohnModel,orpheusTTS,0.0
-Bombril,../data/modelos/Bombril,xTTs-v2,0.0

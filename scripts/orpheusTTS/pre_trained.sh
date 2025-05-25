@@ -1,7 +1,7 @@
 #!/bin/bash
 source ~/miniconda3/etc/profile.d/conda.sh
 
-conda activate unsloth_env
+conda activate aplicacao
 
 python3 ../scripts/orpheusTTS/pre_trained.py "$1" "$2" "$3" "$4"
 

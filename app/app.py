@@ -5,6 +5,7 @@ import os
 import csv
 import zipfile
 import pandas as pd
+from TTS_Utils import UTMOS, SECS, CER, build_dataset, normalize_text
 
 # ─────────────── page config ───────────────
 st.set_page_config(
@@ -40,7 +41,7 @@ st.markdown(
 
     /* título centralizado e cor */
     h1, .stMarkdown h1 {
-        color: #003366 !important;
+        color: #FFFFFF !important;
         text-align: center !important;
     }
 
@@ -86,6 +87,7 @@ with open("models.csv", "w") as f:
     csv_writer = csv.writer(f, delimiter=",")
     csv_writer.writerow(["nome", "path", "model_type", "score"])
     pasta_modelos = "../data/modelos"
+    os.makedirs(pasta_modelos, exist_ok=True)
     models = [
         (nome, 
         os.path.join(pasta_modelos, nome), 
@@ -139,14 +141,23 @@ duration_to_tuning = st.radio("Selecione o número de épocas/steps para fine-tu
 learning_to_tuning = st.radio("Selecione a taxa de aprendizado", avaliables_learning.keys())
 
 if st.button("Iniciar Ajuste Fino", key="fine_tune"):
+    print("-------------------------------------------")
+    print("-------------------------------------------")
+    print("-------------------------------------------")
+    print("-------------------------------------------")
+    print("-------------------------------------------")
+    print("-------------------------------------------")
+    print("-------------------------------------------")
+    print("-------------------------------------------")
+    print("-------------------------------------------")
+    print("-------------------------------------------")
+    print("-------------------------------------------")
+    print("-------------------------------------------")
     if uploaded_files:
         input_audio_path = '../data/raw_audio'
-
         os.makedirs(input_audio_path, exist_ok=True)
 
         for uploaded_file in uploaded_files:
-            input_audio_path = '../data/audio_transcription'
-
             filename = uploaded_file.name
             file_path = os.path.join(input_audio_path, filename)
 
@@ -175,19 +186,14 @@ if st.button("Iniciar Ajuste Fino", key="fine_tune"):
                     f.write(uploaded_file.read())
 
         with st.spinner("Processando áudio…"):
-            fake_progress()
-            #run.transcricao_audio()
-            #run.run_normalization()
+            #build_dataset(input_dir='../data/raw_audio', output_dir='../data/audio_transcription')
             st.success("Áudio processado")
 
         with st.spinner("Fazendo ajuste fino no modelo"):
             print(run.finetune(speaker_name, avaliables_models[model_to_tuning], avaliables_durations[duration_to_tuning], avaliables_learning[learning_to_tuning], inputType))
-
-        st.success("Ajuste fino concluído!")
+            st.success("Ajuste fino concluído!")
     else:
-        #st.warning("Por favor, envie arquivos de áudio antes de iniciar o ajuste fino.")
-        st.warning(run.helloworld())
-        #st.warning(run.finetune())
+        st.warning("Por favor, envie arquivos de áudio antes de iniciar o ajuste fino.")
 
 st.divider()
 
@@ -259,7 +265,7 @@ if model_select == "OrpheusTTS":
         with open(sample_audio_path, "wb") as f:
             f.write(orpheus_audio_sample.read())
 
-        normalized_transcript = run.normalization(transcript)
+        normalized_transcript = normalize_text(transcript)
 
 # xTTS-v2
 if model_select == "XTTS_v2.0_original_model_files":
@@ -282,7 +288,7 @@ if st.button("Gerar Áudio", key="generate_audio"):
     if text_input.strip():
         with st.spinner("Gerando áudio…"):
             fake_progress()
-            normalized_text = run.normalization(text_input)
+            normalized_text = normalize_text(text_input)
 
             print(model_select)
 

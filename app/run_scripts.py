@@ -84,50 +84,6 @@ def synthesize(text: str, model_path: str, model_type: str):
 
     return audio_path
 
-'''
-Função para normalizar um texto
-Recebe:
-    - Texto para ser normalizado
-'''
-def normalization(text):
-    with tempfile.NamedTemporaryFile(mode='w+', delete=False) as temp:
-        temp.write(text)
-        temp_path = temp.name
-
-    input_path = temp_path
-    output_path = '../data/input_text/input.txt'
-
-    result = subprocess.run(
-        ["../scripts/normalization/run.sh", input_path, output_path],
-        check=True,
-        capture_output=True,
-        text=True
-    )
-
-    with open(output_path, "r") as f:
-        result_content = f.read()
-
-    return result_content
-
-'''
-Função para transcrever áudio e gerar um dataset
-Recebe nada, por default o frontend salva os áudios crus em data/raw_audio
-e o script de transcição salva o dataset gerado em data/audio_transcription
-'''
-def transcricao_audio():
-
-    input_path = '../data/raw_audio'
-    output_path = '../data/audio_transcription'
-
-    result = subprocess.run(
-        ["../scripts/transcricao_de_audio/run.sh", input_path, output_path],
-        check=True,
-        capture_output=True,
-        text=True
-    )
-
-    print(result)
-    return result
 
 '''
 Função para gerar áudio utilizado modelo base do Orpheus

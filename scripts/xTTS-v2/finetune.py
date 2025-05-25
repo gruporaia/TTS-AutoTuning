@@ -4,13 +4,13 @@ import shutil
 import gc
 import time
 
-from trainer import Trainer, TrainerArgs
 from pathlib import Path
 from TTS.config.shared_configs import BaseDatasetConfig
 from TTS.tts.datasets import load_tts_samples
 from TTS.tts.layers.xtts.trainer.gpt_trainer import GPTArgs, GPTTrainer, GPTTrainerConfig
 from TTS.tts.models.xtts import XttsAudioConfig
 from TTS.utils.manage import ModelManager
+from trainer import Trainer, TrainerArgs
 
 def finetune(dataset_path: str, output_path: str, epochs: int, lr:int):
 
