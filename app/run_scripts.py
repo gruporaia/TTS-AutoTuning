@@ -13,6 +13,8 @@ sys.path.append(os.path.abspath('../scripts/orpheusTTS'))
 from train_tuning import finetune as orpheus_finetune
 from inference_tuning import synthesize as orpheus_synthesize
 
+import metrics
+
 '''
 Função para realizar finetune de um modelo
 Recebe:
@@ -66,29 +68,22 @@ def synthesize(text: str, model_path: str, model_type: str):
     return audio_path
 
 def evaluate_audio_metrics(
-    audio_path: str | Path,
-    reference_text: str,
-    sample_audio_path: str | Path | None = None,
-    *,
-    lang: str = "pt",
+  
 ) -> dict[str, float | str]:
     """
     Returns a dict with UTMOS, CER and SECS
     (SECS is "N/A" if no reference sample is given).
+
+    '''  audio_path: str | Path,
+    reference_text: str,
+    sample_audio_path: str | Path | None = None,
+    *,
+    lang: str = "pt",''''
     """
 
-    ## Go from /app/ to project root
-    project_root = Path(__file__).resolve().parents[1]
+    
 
-    # Path to the folder containing metrics.py
-    metrics_folder = project_root / "scripts" / "metrics"
-
-    if str(metrics_folder) not in sys.path:
-        sys.path.append(str(metrics_folder))
-
-    # Load the metrics module
-    metrics = importlib.import_module("metrics")
-
+    print(metrics.__file__)
     utmos_score = float(metrics.UTMOS(audio_path))
     cer_score = float(metrics.CER(audio_path, reference_text, lang=lang))
 

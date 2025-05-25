@@ -3,7 +3,7 @@ import sys
 import shutil
 import gc
 import time
-
+import json
 from pathlib import Path
 from TTS.config.shared_configs import BaseDatasetConfig
 from TTS.tts.datasets import load_tts_samples
@@ -34,7 +34,7 @@ def finetune(dataset_path: str, output_path: str, epochs: int, lr:int):
     START_WITH_EVAL = True  # if True it will star with evaluation
     BATCH_SIZE = 3  # set here the batch size
     GRAD_ACUMM_STEPS = 84  # set here the grad accumulation steps
-    EPOCHS=70
+    EPOCHS=epochs
     # Note: we recommend that BATCH_SIZE * GRAD_ACUMM_STEPS need to be at least 252 for more efficient training. You can increase/decrease BATCH_SIZE but then set GRAD_ACUMM_STEPS accordingly.
 
     # Define here the dataset that you want to use for the fine-tuning on.
@@ -52,7 +52,7 @@ def finetune(dataset_path: str, output_path: str, epochs: int, lr:int):
     # Define the path where XTTS v2.0.1 files will be downloaded
     #CHECKPOINTS_OUT_PATH = os.path.join(OUT_PATH, "XTTS_v2.0_original_model_files/")
     #os.makedirs(CHECKPOINTS_OUT_PATH, exist_ok=True)
-    CHECKPOINTS_OUT_PATH = "../data/models/XTTS_v2.0_original_model_files"
+    CHECKPOINTS_OUT_PATH = os.path.abspath("../data/modelos/XTTS_v2.0_original_model_files")
 
 
     # DVAE files
@@ -146,7 +146,7 @@ def finetune(dataset_path: str, output_path: str, epochs: int, lr:int):
         optimizer="AdamW",
         optimizer_wd_only_on_weights=OPTIMIZER_WD_ONLY_ON_WEIGHTS,
         optimizer_params={"betas": [0.9, 0.96], "eps": 1e-8, "weight_decay": 1e-2},
-        lr=5e-06,
+        lr=lr,
         lr_scheduler="MultiStepLR",
         lr_scheduler_params={
             "milestones": [90000000, 60, 65], # MultiStepLR atualiza por época, não step. A receita original ta errada
@@ -233,7 +233,7 @@ def finetune(dataset_path: str, output_path: str, epochs: int, lr:int):
     if os.path.exists(new_log_path):
         os.remove(new_sample_path)
 
-    with open(new_sample_path, "w") as f:
+    with open(new_sample_text_path, "w") as f:
         f.write(SPEAKER_TEXT)
     
 
