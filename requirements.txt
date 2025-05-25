@@ -6,5 +6,4 @@ scikit_learn==1.6.1
 snac==1.2.1
 soundfile==0.13.1
 streamlit==1.41.1
-transformers==4.51.3
 unsloth==2025.5.7
