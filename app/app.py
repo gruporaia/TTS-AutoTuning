@@ -1,11 +1,12 @@
 import streamlit as st
+import sys
 import time
+from TTS_Utils import UTMOS, SECS, CER, build_dataset, normalize_text
 import run_scripts as run
 import os
 import csv
 import zipfile
 import pandas as pd
-from TTS_Utils import UTMOS, SECS, CER, build_dataset, normalize_text
 
 sys.path.append(os.path.abspath('../scripts/orpheusTTS'))
 from pre_trained import synthesize as orpheus_pre_trained

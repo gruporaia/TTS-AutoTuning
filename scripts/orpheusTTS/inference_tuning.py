@@ -16,11 +16,6 @@ from unsloth import is_bfloat16_supported, FastLanguageModel
 from IPython.display import display, Audio
 import torchaudio
 
-
-model_path = sys.argv[1] # Model input
-audio_output_path = sys.argv[2] # Audio output
-text_to_speech = sys.argv[3] # Text to speech
-
 def synthesize(text: str, model_path: str, audio_output_path: str):
 	# Ensure output directory exists
 	os.makedirs(audio_output_path, exist_ok=True)
