@@ -168,6 +168,10 @@ def finetune(audio_path: str, model_output_path: str, duration: int, learning_ra
 
         print(f"Processing text: {text_prompt}, type of text: {type(text_prompt)}")
 
+        #Ignore Invalid text prompts
+        if not isinstance(text_prompt, str) or text_prompt.strip() == "":
+            return {}
+
         text_ids = tokenizer.encode(text_prompt, add_special_tokens=True)
         text_ids.append(end_of_text)
 
