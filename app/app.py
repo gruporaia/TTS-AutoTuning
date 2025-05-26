@@ -151,7 +151,6 @@ learning_to_tuning = st.radio("Selecione a taxa de aprendizado", avaliables_lear
 if st.button("Iniciar Ajuste Fino", key="fine_tune"):
     if uploaded_files:
         input_audio_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'raw_audio'))
-
         os.makedirs(input_audio_path, exist_ok=True)
 
         for uploaded_file in uploaded_files:
@@ -187,18 +186,20 @@ if st.button("Iniciar Ajuste Fino", key="fine_tune"):
             output_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'audio_transcription'))
             build_dataset(input_dir, output_dir)
             st.success("Áudio processado")
+            
+            #apagar a pasta de audio de entrada criada
+            if os.path.exists(input_dir) and os.path.isdir(input_dir):
+                shutil.rmtree(input_dir)  
 
         with st.spinner("Fazendo ajuste fino no modelo"):
             print(run.finetune(speaker_name, avaliables_models[model_to_tuning], int(avaliables_durations[duration_to_tuning]), float(avaliables_learning[learning_to_tuning]), inputType))
             st.success("Ajuste fino concluído!")
 
             #apagar a pasta de dataset criada
-            input_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'raw_audio'))
             output_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'audio_transcription'))
-            if os.path.exists(input_dir) and os.path.isdir(input_dir):
-                shutil.rmtree(input_dir)
             if os.path.exists(output_dir) and os.path.isdir(output_dir):
-                shutil.rmtree(output_dir)           
+                shutil.rmtree(output_dir)
+                     
 
     else:
         st.warning("Por favor, envie arquivos de áudio antes de iniciar o ajuste fino.")
