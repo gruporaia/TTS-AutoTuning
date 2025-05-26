@@ -1,5 +1,6 @@
 import os
 import sys
+import glob
 import shutil
 import gc
 import time
@@ -35,11 +36,14 @@ def finetune(dataset_path: str, output_path: str, epochs: int, lr:int):
     # Note: we recommend that BATCH_SIZE * GRAD_ACUMM_STEPS need to be at least 252 for more efficient training. You can increase/decrease BATCH_SIZE but then set GRAD_ACUMM_STEPS accordingly.
 
     # Define here the dataset that you want to use for the fine-tuning on.
+    base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "audio_transcription")
+    csv_path = glob.glob(os.path.join(base_dir, "*.csv"))[0]
+    csv_filename = os.path.basename(csv_path)
     config_dataset = BaseDatasetConfig(
         formatter="ljspeech",
         dataset_name="bombrilSpeech",
         path=DATASET_PATH,
-        meta_file_train="metadata.csv",
+        meta_file_train=csv_filename,
         language="pt",
     )
 
