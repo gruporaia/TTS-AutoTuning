@@ -185,7 +185,7 @@ if st.button("Iniciar Ajuste Fino", key="fine_tune"):
             st.success("Áudio processado")
 
         with st.spinner("Fazendo ajuste fino no modelo"):
-            print(run.finetune(speaker_name, avaliables_models[model_to_tuning], int(avaliables_durations[duration_to_tuning]), int(avaliables_learning[learning_to_tuning]), inputType))
+            print(run.finetune(speaker_name, avaliables_models[model_to_tuning], int(avaliables_durations[duration_to_tuning]), float(avaliables_learning[learning_to_tuning]), inputType))
             st.success("Ajuste fino concluído!")
     else:
         st.warning("Por favor, envie arquivos de áudio antes de iniciar o ajuste fino.")
