@@ -5,9 +5,11 @@ import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"  
 import pandas as pd
 from datasets import Dataset, Audio, concatenate_datasets
+import glob
+
 
 def create_dataset(base_dir):
-    csv_path = os.path.join(base_dir, "metadata.csv")
+    csv_path = glob.glob(os.path.join(base_dir, "*.csv"))[0]
     audio_dir = os.path.join(base_dir, "wavs")
 
     df = pd.read_csv(csv_path, sep="|", header=None, names=["audio_filename", "text_original", "text"])
