@@ -215,7 +215,7 @@ models = {}
 models_type = {} # Se o modelo é o xtts ou orpheus
 #model_evals = {}
 
-pasta_modelos = "../data/modelos"
+pasta_modelos = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'modelos'))
 
 for nome in os.listdir(pasta_modelos):
     path = os.path.join(pasta_modelos, nome)
