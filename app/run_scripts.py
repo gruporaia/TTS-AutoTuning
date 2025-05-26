@@ -37,10 +37,8 @@ def finetune(model_name, model_to_tuning, duration_to_tuning, learning_to_tuning
     output_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'modelos', f'{model_name}'))
 
     if model_to_tuning == "xTTS-v2":
-        print("Entrou no xTTS-v2")
         result = xtts_finetune(input_path, output_path, duration_to_tuning, learning_to_tuning)
     elif model_to_tuning == "orpheusTTS":
-        print("Entrou no Orpheus")
         result = orpheus_finetune(input_path, output_path, duration_to_tuning, learning_to_tuning, inputType)
 
     csv_modelos = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'models.csv'))
@@ -48,7 +46,6 @@ def finetune(model_name, model_to_tuning, duration_to_tuning, learning_to_tuning
         csv_writer = csv.writer(csv_modelos, delimiter=',')
         csv_writer.writerow([model_name, output_path, model_to_tuning, 0.0])
 
-    print(result)
     return result
 
 '''

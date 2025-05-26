@@ -300,8 +300,6 @@ if st.button("Gerar Áudio", key="generate_audio"):
             fake_progress()
             normalized_text = normalize_text(text_input)
 
-            print(model_select)
-
             output_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'gen'))
 
             # Orpheus Pré-treinado

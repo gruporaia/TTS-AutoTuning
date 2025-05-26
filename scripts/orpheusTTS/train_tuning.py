@@ -166,8 +166,6 @@ def finetune(audio_path: str, model_output_path: str, duration: int, learning_ra
         # Determine whether to include the source field
         text_prompt = f"{example['source']}: {example['text']}" if "source" in example else example["text"]
 
-        print(f"Processing text: {text_prompt}, type of text: {type(text_prompt)}")
-
         #Ignore Invalid text prompts
         # if not isinstance(text_prompt, str) or text_prompt.strip() == "":
         #     return None
