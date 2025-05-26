@@ -13,10 +13,6 @@ from TTS.utils.manage import ModelManager
 from trainer import Trainer, TrainerArgs
 
 def finetune(dataset_path: str, output_path: str, epochs: int, lr:int):
-
-    print("ENTREIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
-    print("NAO VO FALA DE NOVO IMRAO EU ENTENDI, VAI SER SÓ UMA VEZ, OK?")
-
     # Logging parameters
     RUN_NAME = "XTTSV2"
     PROJECT_NAME = "VOICESYNTH"
@@ -53,10 +49,7 @@ def finetune(dataset_path: str, output_path: str, epochs: int, lr:int):
     # Define the path where XTTS v2.0.1 files will be downloaded
     #CHECKPOINTS_OUT_PATH = os.path.join(OUT_PATH, "XTTS_v2.0_original_model_files/")
     #os.makedirs(CHECKPOINTS_OUT_PATH, exist_ok=True)
-    CHECKPOINTS_OUT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data', 'modelos', 'XTTS_v2.0_original_model_files'))
-    print("CHECKPOINTS_OUT_PATH: ", CHECKPOINTS_OUT_PATH)
-    print(os.path.abspath(os.path.join(os.path.dirname(__file__),'data')))
-
+    CHECKPOINTS_OUT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'data', 'modelos', 'XTTS_v2.0_original_model_files'))
 
     # DVAE files
     DVAE_CHECKPOINT_LINK = "https://huggingface.co/coqui/XTTS-v2/resolve/main/dvae.pth"

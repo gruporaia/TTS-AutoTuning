@@ -147,18 +147,6 @@ duration_to_tuning = st.radio("Selecione o número de épocas/steps para fine-tu
 learning_to_tuning = st.radio("Selecione a taxa de aprendizado", avaliables_learning.keys())
 
 if st.button("Iniciar Ajuste Fino", key="fine_tune"):
-    print("-------------------------------------------")
-    print("-------------------------------------------")
-    print("-------------------------------------------")
-    print("-------------------------------------------")
-    print("-------------------------------------------")
-    print("-------------------------------------------")
-    print("-------------------------------------------")
-    print("-------------------------------------------")
-    print("-------------------------------------------")
-    print("-------------------------------------------")
-    print("-------------------------------------------")
-    print("-------------------------------------------")
     if uploaded_files:
         input_audio_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'raw_audio'))
 
