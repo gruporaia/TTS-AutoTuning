@@ -34,7 +34,7 @@ def finetune(model_name, model_to_tuning, duration_to_tuning, learning_to_tuning
         input_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'audio_transcription'))
     else:
         input_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'audio_transcription', f'{model_name}'))
-    output_path = input_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'modelos', f'{model_name}'))
+    output_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'modelos', f'{model_name}'))
 
     if model_to_tuning == "xTTS-v2":
         print("Entrou no xTTS-v2")
