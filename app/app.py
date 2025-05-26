@@ -92,7 +92,7 @@ def fake_progress():
 # with open("models.csv", "w") as f:
 #     csv_writer = csv.writer(f, delimiter=",")
 #     csv_writer.writerow(["nome", "path", "model_type", "score"])
-#     pasta_modelos = "../data/modelos"
+#     pasta_modelos = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'modelos'))
 #     os.makedirs(pasta_modelos, exist_ok=True)
 #     models = [
 #         (nome, 
@@ -160,7 +160,8 @@ if st.button("Iniciar Ajuste Fino", key="fine_tune"):
     print("-------------------------------------------")
     print("-------------------------------------------")
     if uploaded_files:
-        input_audio_path = '../data/raw_audio'
+        input_audio_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'raw_audio'))
+
         os.makedirs(input_audio_path, exist_ok=True)
 
         for uploaded_file in uploaded_files:

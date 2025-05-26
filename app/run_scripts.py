@@ -31,10 +31,10 @@ Recebe:
 def finetune(model_name, model_to_tuning, duration_to_tuning, learning_to_tuning, inputType):
 
     if inputType == "audio":
-        input_path = '../data/audio_transcription'
+        input_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'audio_transcription'))
     else:
-        input_path = f'../data/audio_transcription/{model_name}'
-    output_path = f'../data/modelos/{model_name}'
+        input_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'audio_transcription', f'{model_name}'))
+    output_path = input_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'modelos', f'{model_name}'))
 
     if model_to_tuning == "xTTS-v2":
         print("Entrou no xTTS-v2")
@@ -43,7 +43,8 @@ def finetune(model_name, model_to_tuning, duration_to_tuning, learning_to_tuning
         print("Entrou no Orpheus")
         result = orpheus_finetune(input_path, output_path, duration_to_tuning, learning_to_tuning, inputType)
 
-    with open("../data/models.csv", "a") as csv_modelos:
+    csv_modelos = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'models.csv'))
+    with open(csv_modelos, "a") as csv_modelos:
         csv_writer = csv.writer(csv_modelos, delimiter=',')
         csv_writer.writerow([model_name, output_path, model_to_tuning, 0.0])
 
@@ -59,7 +60,7 @@ Recebe:
 '''
 def synthesize(text: str, model_path: str, model_type: str):
     input_path = model_path
-    output_path = '../data/gen'
+    output_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'gen'))
     audio_path = ""
 
     if model_type == "xTTS-v2":
