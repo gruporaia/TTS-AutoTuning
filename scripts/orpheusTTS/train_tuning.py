@@ -166,6 +166,8 @@ def finetune(audio_path: str, model_output_path: str, duration: int, learning_ra
         # Determine whether to include the source field
         text_prompt = f"{example['source']}: {example['text']}" if "source" in example else example["text"]
 
+        print(f"Processing text: {text_prompt}, type of text: {type(text_prompt)}")
+
         text_ids = tokenizer.encode(text_prompt, add_special_tokens=True)
         text_ids.append(end_of_text)
 
