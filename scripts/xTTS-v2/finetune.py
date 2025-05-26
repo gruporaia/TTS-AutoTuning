@@ -15,6 +15,7 @@ from trainer import Trainer, TrainerArgs
 def finetune(dataset_path: str, output_path: str, epochs: int, lr:int):
 
     print("ENTREIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
+    print("NAO VO FALA DE NOVO IMRAO EU ENTENDI, VAI SER SÓ UMA VEZ, OK?")
 
     # Logging parameters
     RUN_NAME = "XTTSV2"
