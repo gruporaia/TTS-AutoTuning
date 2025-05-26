@@ -152,3 +152,5 @@ def synthesize(text: str, model_path: str, audio_output_path: str):
 
 	# Clean up to save RAM
 	del my_samples,samples
+
+	return f"{audio_output_path}/OutputTTSOrpheus.wav"

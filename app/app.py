@@ -289,16 +289,17 @@ if st.button("Gerar Áudio", key="generate_audio"):
 
             print(model_select)
 
+            output_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'gen'))
+
             # Orpheus Pré-treinado
             if model_select == "OrpheusTTS" and sample_audio_path:
-                output_path = '../data/gen'
                 audio_path = orpheus_pre_trained(sample_audio_path, output_path, normalized_text, normalized_transcript)
             # xTTS pré-treinado
             elif model_select == "XTTS_v2.0_original_model_files" and sample_audio_path: # garante que a amostra foi enviada
-                audio_path = run.synthesize(normalized_text, models[model_select], models_type[model_select])
+                audio_path = run.synthesize(normalized_text, output_path, models[model_select])
             # Demais modelos fine-tunados
             elif model_select != "XTTS_v2.0_original_model_files":
-                audio_path = run.synthesize(normalized_text, models[model_select], models_type[model_select])
+                audio_path = run.synthesize(normalized_text, output_path, models[model_select])
 
         if  audio_path:
             with open(audio_path, "rb") as audio_arquivo:

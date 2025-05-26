@@ -6,7 +6,7 @@ from TTS.tts.configs.xtts_config import XttsConfig
 from TTS.tts.models.xtts import Xtts
 import torchaudio
 
-def synthesize(run_path=None, output_path=None, text=None):
+def synthesize(text=None, output_path=None, run_path=None):
     model_path = config_path = sample_path = None
     if run_path:
         for filename in os.listdir(run_path):
@@ -52,4 +52,6 @@ def synthesize(run_path=None, output_path=None, text=None):
     
 
     torchaudio.save(output_path, torch.tensor(outputs['wav']).unsqueeze(0), 24000)
+
+    return f"{output_path}/output.wav"
 
