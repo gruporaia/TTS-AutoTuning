@@ -52,7 +52,7 @@ def finetune(dataset_path: str, output_path: str, epochs: int, lr:int):
     # Define the path where XTTS v2.0.1 files will be downloaded
     #CHECKPOINTS_OUT_PATH = os.path.join(OUT_PATH, "XTTS_v2.0_original_model_files/")
     #os.makedirs(CHECKPOINTS_OUT_PATH, exist_ok=True)
-    CHECKPOINTS_OUT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'modelos', 'XTTS_v2.0_original_model_files'))
+    CHECKPOINTS_OUT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data', 'modelos', 'XTTS_v2.0_original_model_files'))
 
     # DVAE files
     DVAE_CHECKPOINT_LINK = "https://huggingface.co/coqui/XTTS-v2/resolve/main/dvae.pth"
