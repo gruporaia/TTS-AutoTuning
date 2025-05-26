@@ -1,5 +1,7 @@
 # Síntese de áudio com Orpheus TTS pré-treinado e apenas
 # 1 amostra de áudio
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"  
 
 import torch
 import numpy as np
@@ -7,7 +9,6 @@ import soundfile as sf
 import librosa
 import torchaudio.transforms as T
 import torch
-import os
 import torchaudio
 import sys
 import shutil

@@ -1,4 +1,6 @@
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"  
+
 import torch
 import locale
 import torchaudio.transforms as T

@@ -2,6 +2,7 @@
 # dataset em formato Hugging Face
 
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"  
 import pandas as pd
 from datasets import Dataset, Audio, concatenate_datasets
 

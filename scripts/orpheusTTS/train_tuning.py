@@ -1,9 +1,9 @@
 # Fine-tuning do Orpheus TTS
-
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"  
 import torch
 import locale
 import torchaudio.transforms as T
-import os
 import torch
 import sys
 import shutil
