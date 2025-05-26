@@ -19,8 +19,6 @@ if orpheus_path not in sys.path:
 from train_tuning import finetune as orpheus_finetune
 from inference_tuning import synthesize as orpheus_synthesize
 
-import metrics
-
 '''
 Função para realizar finetune de um modelo
 Recebe:
