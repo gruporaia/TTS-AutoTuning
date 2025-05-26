@@ -29,7 +29,7 @@ def synthesize(text: str, model_path: str, audio_output_path: str):
 		#token = "hf_...", # use one if using gated models like meta-llama/Llama-2-7b-hf
 	)
 
-	prompts = [text_to_speech]
+	prompts = [text]
 
 	chosen_voice = None # None for single-speaker
 
