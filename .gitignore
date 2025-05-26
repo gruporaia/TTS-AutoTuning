@@ -6,4 +6,5 @@ scripts/metrics/__pycache__/
 scripts/orpheusTTS/__pycache__/
 scripts/xTTS-v2/__pycache__/
 app/__pycache__/
+scripts/xTTS-v2/run/
 unsloth_compiled_cache/ 
