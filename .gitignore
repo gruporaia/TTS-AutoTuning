@@ -1,3 +1,8 @@
 *.mp3
 *.wav
 data/
+
+scripts/metrics/__pycache__/
+scripts/orpheusTTS/__pycache__/
+scripts/xTTS-v2/__pycache__/
+app/__pycache__/
