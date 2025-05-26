@@ -1,4 +1,5 @@
 import streamlit as st
+import shutil
 import sys
 import time
 from TTS_Utils import UTMOS, SECS, CER, build_dataset, normalize_text
@@ -182,12 +183,23 @@ if st.button("Iniciar Ajuste Fino", key="fine_tune"):
                     f.write(uploaded_file.read())
 
         with st.spinner("Processando áudio…"):
-            #build_dataset(input_dir='../data/raw_audio', output_dir='../data/audio_transcription')
+            input_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'raw_audio'))
+            output_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'audio_transcription'))
+            build_dataset(input_dir, output_dir)
             st.success("Áudio processado")
 
         with st.spinner("Fazendo ajuste fino no modelo"):
             print(run.finetune(speaker_name, avaliables_models[model_to_tuning], int(avaliables_durations[duration_to_tuning]), float(avaliables_learning[learning_to_tuning]), inputType))
             st.success("Ajuste fino concluído!")
+
+            #apagar a pasta de dataset criada
+            input_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'raw_audio'))
+            output_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'audio_transcription'))
+            if os.path.exists(input_dir) and os.path.isdir(input_dir):
+                shutil.rmtree(input_dir)
+            if os.path.exists(output_dir) and os.path.isdir(output_dir):
+                shutil.rmtree(output_dir)           
+
     else:
         st.warning("Por favor, envie arquivos de áudio antes de iniciar o ajuste fino.")
 
@@ -305,18 +317,18 @@ if st.button("Gerar Áudio", key="generate_audio"):
             with open(audio_path, "rb") as audio_arquivo:
                 audio_bytes = audio_arquivo.read()
 
-            metrics = run.evaluate_audio_metrics(
-                audio_path,
-                text_input,
-                sample_audio_path=sample_audio_path,
-                lang="pt",
-            )
+            # metrics = run.evaluate_audio_metrics(
+            #     audio_path,
+            #     text_input,
+            #     sample_audio_path=sample_audio_path,
+            #     lang="pt",
+            # )
 
-            metrics_df = pd.DataFrame(
-                {"Metric": metrics.keys(), "Score": metrics.values()}
-            )
+            # metrics_df = pd.DataFrame(
+            #     {"Metric": metrics.keys(), "Score": metrics.values()}
+            # )
 
-            st.subheader("Audio-quality metrics")
-            st.table(metrics_df)
+            # st.subheader("Audio-quality metrics")
+            # st.table(metrics_df)
     else:
         st.warning("Por favor, insira um texto para gerar o áudio.")
