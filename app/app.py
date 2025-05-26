@@ -273,7 +273,8 @@ if model_select == "XTTS_v2.0_original_model_files":
     )
     
     if(xtts_audio_sample):
-        sample_audio_path = '../data/XTTS_v2.0_original_model_files'
+        sample_audio_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'sample_audio'))
+        os.makedirs(sample_audio_dir, exist_ok=True) 
         sample_audio_path = os.path.join(sample_audio_path, xtts_audio_sample.name)
         sample_byte = xtts_audio_sample.getvalue()
         with open(sample_audio_path, "wb") as f:
