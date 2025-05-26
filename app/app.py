@@ -251,7 +251,7 @@ if model_select == "OrpheusTTS":
     )
 
     if orpheus_audio_sample:
-        input_audio_path = '../data/sample_audio'
+        input_audio_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'sample_audio'))
 
         os.makedirs(input_audio_path, exist_ok=True)
 
