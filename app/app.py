@@ -320,18 +320,18 @@ if st.button("Gerar Áudio", key="generate_audio"):
                 audio_bytes = audio_arquivo.read()
 
 
-            # metrics = run.evaluate_audio_metrics(
-            #     audio_path,
-            #     text_input,
-            #     sample_audio_path=sample_audio_path,
-            #     lang="pt",
-            # )
+            metrics = run.evaluate_audio_metrics(
+                audio_path,
+                text_input,
+                sample_audio_path=sample_audio_path,
+                lang="pt",
+            )
 
-            # metrics_df = pd.DataFrame(
-            #     {"Metric": metrics.keys(), "Score": metrics.values()}
-            # )
+            metrics_df = pd.DataFrame(
+                {"Metric": metrics.keys(), "Score": metrics.values()}
+            )
 
-            # st.subheader("Audio-quality metrics")
-            # st.table(metrics_df)
+            st.subheader("Audio-quality metrics")
+            st.table(metrics_df)
     else:
         st.warning("Por favor, insira um texto para gerar o áudio.")
