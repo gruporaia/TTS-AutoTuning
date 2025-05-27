@@ -19,7 +19,7 @@ def finetune(dataset_path: str, output_path: str, epochs: int, lr:int):
     PROJECT_NAME = "VOICESYNTH"
     DASHBOARD_LOGGER = "tensorboard"
     LOGGER_URI = None
-    EVAL_SPLIT_SIZE = 0.2
+    EVAL_SPLIT_SIZE = 0.3
     EVAL_SPLIT_MAXSIZE = 256
 
     # Set here the path that the checkpoints will be saved. Default: ./run/training/
@@ -39,9 +39,10 @@ def finetune(dataset_path: str, output_path: str, epochs: int, lr:int):
     base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "audio_transcription")
     csv_path = glob.glob(os.path.join(base_dir, "*.csv"))[0]
     csv_filename = os.path.basename(csv_path)
+    
     config_dataset = BaseDatasetConfig(
         formatter="ljspeech",
-        dataset_name="bombrilSpeech",
+        dataset_name="Dataset",
         path=DATASET_PATH,
         meta_file_train=csv_filename,
         language="pt",
