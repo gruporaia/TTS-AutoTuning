@@ -2,18 +2,20 @@ import streamlit as st
 import shutil
 import sys
 import time
-from TTS_Utils import UTMOS, SECS, CER, build_dataset, normalize_text
 import os
 import csv
 import zipfile
 import pandas as pd
+from TTS_Utils import UTMOS, SECS, CER, build_dataset, normalize_text
+import run_scripts as run
 
 orpheus_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'scripts', 'orpheusTTS'))
 if orpheus_path not in sys.path:
     sys.path.insert(0, orpheus_path)
-    from pre_trained import pre_trained as orpheus_pre_trained
+from pre_trained import pre_trained as orpheus_pre_trained
 
-import run_scripts as run
+
+
 # ─────────────── page config ───────────────
 st.set_page_config(
     page_title="Fine-tune & Generate Audio",
@@ -307,14 +309,16 @@ if st.button("Gerar Áudio", key="generate_audio"):
                 audio_path = orpheus_pre_trained(sample_audio_path, output_path, normalized_text, normalized_transcript)
             # xTTS pré-treinado
             elif model_select == "XTTS_v2.0_original_model_files" and sample_audio_path: # garante que a amostra foi enviada
-                audio_path = run.synthesize(normalized_text, output_path, models[model_select])
+                audio_path = run.synthesize(normalized_text, models[model_select], models_type[model_select])
             # Demais modelos fine-tunados
             elif model_select != "XTTS_v2.0_original_model_files":
-                audio_path = run.synthesize(normalized_text, output_path, models[model_select])
+                audio_path = run.synthesize(normalized_text, models[model_select], models_type[model_select])
 
         if  audio_path:
+            st.audio(audio_path)
             with open(audio_path, "rb") as audio_arquivo:
                 audio_bytes = audio_arquivo.read()
+
 
             # metrics = run.evaluate_audio_metrics(
             #     audio_path,

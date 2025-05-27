@@ -60,11 +60,12 @@ def synthesize(text: str, model_path: str, model_type: str):
     output_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'gen'))
     audio_path = ""
 
+    
     if model_type == "xTTS-v2":
-        xtts_synthesize(input_path, output_path, text)
+        xtts_synthesize(text, output_path, input_path)
         audio_path = f"{output_path}/output.wav"
     elif model_type == "orpheusTTS":
-        orpheus_synthesize(input_path, output_path, text)
+        orpheus_synthesize(text, input_path, output_path)
         audio_path = f"{output_path}/OutputTTSOrpheus.wav"
 
     return audio_path
