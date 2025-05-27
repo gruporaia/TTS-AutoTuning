@@ -71,17 +71,17 @@ def synthesize(text: str, model_path: str, model_type: str):
     return audio_path
 
 def evaluate_audio_metrics(
-  
+   audio_path: str | Path,
+    reference_text: str,
+    sample_audio_path: str | Path | None = None,
+    *,
+    lang: str = "pt"
 ) -> dict[str, float | str]:
     """
     Returns a dict with UTMOS, CER and SECS
     (SECS is "N/A" if no reference sample is given).
 
-    '''  audio_path: str | Path,
-    reference_text: str,
-    sample_audio_path: str | Path | None = None,
-    *,
-    lang: str = "pt",''''
+    ''' ,''''
     """
 
 
