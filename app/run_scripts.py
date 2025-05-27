@@ -46,6 +46,7 @@ def finetune(model_name, model_to_tuning, duration_to_tuning, learning_to_tuning
         csv_writer = csv.writer(csv_modelos, delimiter=',')
         csv_writer.writerow([model_name, output_path, model_to_tuning, 0.0])
 
+    print(result)
     return result
 
 '''

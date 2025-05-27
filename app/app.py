@@ -150,6 +150,8 @@ model_to_tuning = st.radio("Selecione o modelo para fine-tuning", avaliables_mod
 duration_to_tuning = st.radio("Selecione o número de épocas/steps para fine-tuning", avaliables_durations.keys())
 learning_to_tuning = st.radio("Selecione a taxa de aprendizado", avaliables_learning.keys())
 
+first_audio_path = None                              
+
 if st.button("Iniciar Ajuste Fino", key="fine_tune"):
     if uploaded_files:
         input_audio_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'raw_audio'))
@@ -183,11 +185,15 @@ if st.button("Iniciar Ajuste Fino", key="fine_tune"):
                 with open(file_path, "wb") as f:
                     f.write(uploaded_file.read())
 
+            if first_audio_path is None:                      # <<< guarda o 1º arquivo
+                first_audio_path = file_path
+    
         with st.spinner("Processando áudio…"):
             input_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'raw_audio'))
             output_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'audio_transcription'))
             build_dataset(input_dir, output_dir)
             st.success("Áudio processado")
+            
             
             #apagar a pasta de audio de entrada criada
             if os.path.exists(input_dir) and os.path.isdir(input_dir):
@@ -290,7 +296,7 @@ if model_select == "XTTS_v2.0_original_model_files":
     if(xtts_audio_sample):
         sample_audio_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'sample_audio'))
         os.makedirs(sample_audio_dir, exist_ok=True) 
-        sample_audio_path = os.path.join(sample_audio_path, xtts_audio_sample.name)
+        sample_audio_path = os.path.join(sample_audio_dir, xtts_audio_sample.name)
         sample_byte = xtts_audio_sample.getvalue()
         with open(sample_audio_path, "wb") as f:
             f.write(sample_byte)
@@ -318,7 +324,6 @@ if st.button("Gerar Áudio", key="generate_audio"):
             st.audio(audio_path)
             with open(audio_path, "rb") as audio_arquivo:
                 audio_bytes = audio_arquivo.read()
-
 
             metrics = run.evaluate_audio_metrics(
                 audio_path,
