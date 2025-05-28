@@ -13,20 +13,20 @@ from TTS.tts.models.xtts import XttsAudioConfig
 from TTS.utils.manage import ModelManager
 from trainer import Trainer, TrainerArgs
 
-def finetune(dataset_path: str, output_path: str, epochs: int, lr:int):
+def finetune(dataset_path: str, output_path: str, epochs: int, lr:float):
     # Logging parameters
     RUN_NAME = "XTTSV2"
     PROJECT_NAME = "VOICESYNTH"
     DASHBOARD_LOGGER = "tensorboard"
     LOGGER_URI = None
-    EVAL_SPLIT_SIZE = 0.3
+    EVAL_SPLIT_SIZE = 0.5
     EVAL_SPLIT_MAXSIZE = 256
 
     # Set here the path that the checkpoints will be saved. Default: ./run/training/
     OUT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "run", "training")
 
     DATASET_PATH = dataset_path
-
+    print(DATASET_PATH )
     # Training Parameters
     OPTIMIZER_WD_ONLY_ON_WEIGHTS = True  # for multi-gpu training please make it False
     START_WITH_EVAL = True  # if True it will star with evaluation
@@ -37,7 +37,9 @@ def finetune(dataset_path: str, output_path: str, epochs: int, lr:int):
 
     # Define here the dataset that you want to use for the fine-tuning on.
     base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "audio_transcription")
-    csv_path = glob.glob(os.path.join(base_dir, "*.csv"))[0]
+    csv_files = glob.glob(os.path.join(base_dir, "*.csv"))
+    csv_path = os.path.join(base_dir, max(csv_files, key=os.path.getctime))
+    #csv_path = glob.glob(os.path.join(base_dir, "*.csv"))[0] # aqui tem que achar o csv certo, não só o primeiro
     csv_filename = os.path.basename(csv_path)
     
     config_dataset = BaseDatasetConfig(
@@ -50,7 +52,6 @@ def finetune(dataset_path: str, output_path: str, epochs: int, lr:int):
 
     # Add here the configs of the datasets
     DATASETS_CONFIG_LIST = [config_dataset]
-
     # Define the path where XTTS v2.0.1 files will be downloaded
     #CHECKPOINTS_OUT_PATH = os.path.join(OUT_PATH, "XTTS_v2.0_original_model_files/")
     #os.makedirs(CHECKPOINTS_OUT_PATH, exist_ok=True)
@@ -84,7 +85,8 @@ def finetune(dataset_path: str, output_path: str, epochs: int, lr:int):
         ModelManager._download_model_files(
             [TOKENIZER_FILE_LINK, XTTS_CHECKPOINT_LINK], CHECKPOINTS_OUT_PATH, progress_bar=True
         )
-
+    print("Loading samples")
+    print(DATASETS_CONFIG_LIST)
     # load training samples
     train_samples, eval_samples = load_tts_samples(
         DATASETS_CONFIG_LIST,

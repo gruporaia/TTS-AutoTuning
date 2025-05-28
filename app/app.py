@@ -150,7 +150,7 @@ model_to_tuning = st.radio("Selecione o modelo para fine-tuning", avaliables_mod
 duration_to_tuning = st.radio("Selecione o número de épocas/steps para fine-tuning", avaliables_durations.keys())
 learning_to_tuning = st.radio("Selecione a taxa de aprendizado", avaliables_learning.keys())
 
-first_audio_path = None                              
+exemple_voice_path = None                              
 
 if st.button("Iniciar Ajuste Fino", key="fine_tune"):
     if uploaded_files:
@@ -185,8 +185,8 @@ if st.button("Iniciar Ajuste Fino", key="fine_tune"):
                 with open(file_path, "wb") as f:
                     f.write(uploaded_file.read())
 
-            if first_audio_path is None:                      # <<< guarda o 1º arquivo
-                first_audio_path = file_path
+            if exemple_voice_path is None:                      # <<< guarda o 1º arquivo
+                exemple_voice_path = file_path
     
         with st.spinner("Processando áudio…"):
             input_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'raw_audio'))
@@ -194,8 +194,29 @@ if st.button("Iniciar Ajuste Fino", key="fine_tune"):
             build_dataset(input_dir, output_dir)
             st.success("Áudio processado")
             
-            
-            #apagar a pasta de audio de entrada criada
+
+            # salva um audio de exemplo para as métricas
+            first_generated_wav = None
+            for root, _, files in os.walk(output_dir):
+                for f in sorted(files):
+                    if f.lower().endswith(".wav"):
+                        first_generated_wav = os.path.join(root, f)
+                        break
+                if first_generated_wav:
+                    break
+
+            if first_generated_wav:
+                fine_tune_samples_dir = os.path.abspath(
+                    os.path.join(os.path.dirname(__file__), '..', 'data', 'fine_tune_samples')
+                )
+                os.makedirs(fine_tune_samples_dir, exist_ok=True)
+
+                saved_sample_path = os.path.join(
+                    fine_tune_samples_dir, f"{speaker_name}_sample.wav"
+                )
+            shutil.copy(first_generated_wav, saved_sample_path)
+            st.session_state["fine_tune_sample_path"] = saved_sample_path
+
             if os.path.exists(input_dir) and os.path.isdir(input_dir):
                 shutil.rmtree(input_dir)  
 
@@ -325,10 +346,21 @@ if st.button("Gerar Áudio", key="generate_audio"):
             with open(audio_path, "rb") as audio_arquivo:
                 audio_bytes = audio_arquivo.read()
 
+            is_finetuned_model = model_select not in {
+                "XTTS_v2.0_original_model_files",
+                "OrpheusTTS",
+            }
+
+            ref_audio_path = (
+                st.session_state.get("fine_tune_sample_path", "")
+                if is_finetuned_model
+                else sample_audio_path
+            )
+
             metrics = run.evaluate_audio_metrics(
                 audio_path,
                 text_input,
-                sample_audio_path=sample_audio_path,
+                sample_audio_path=ref_audio_path,    # <<< passa o caminho correto
                 lang="pt",
             )
 

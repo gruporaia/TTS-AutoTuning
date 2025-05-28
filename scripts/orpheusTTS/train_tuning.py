@@ -63,6 +63,8 @@ def finetune(audio_path: str, model_output_path: str, duration: int, learning_ra
 
     # Tokenização das amostras do dataset
 
+    print(dataset[1])
+
     locale.getpreferredencoding = lambda: "UTF-8"
     ds_sample_rate = dataset[0]["audio"]["sampling_rate"]
 

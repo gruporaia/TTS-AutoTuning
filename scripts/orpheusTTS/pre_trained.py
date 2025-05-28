@@ -18,6 +18,7 @@ import time
 from datasets import load_dataset, load_from_disk
 from huggingface_hub import snapshot_download
 from transformers import AutoModelForCausalLM, Trainer, TrainingArguments, AutoTokenizer
+from unsloth import is_bfloat16_supported, FastLanguageModel
 from huggingface_hub import snapshot_download
 from snac import SNAC
 
@@ -31,7 +32,7 @@ def pre_trained(input_path: str, output_path: str, text: str, transcript: str):
 	device = "cuda" if torch.cuda.is_available() else "cpu"
 	snac_model = SNAC.from_pretrained("hubertsiuzdak/snac_24khz")
    
-	model_path = snapshot_download(
+	'''model_path = snapshot_download(
 		repo_id=model_name,
 		allow_patterns=[
 			"config.json",
@@ -50,9 +51,18 @@ def pre_trained(input_path: str, output_path: str, text: str, transcript: str):
 			"merges.txt",
 			"tokenizer.*"
 		]
+	)'''
+
+	model, tokenizer = FastLanguageModel.from_pretrained(
+		model_name = "../data/modelos/OrpheusTTS",
+		max_seq_length= 4096, # Choose any for long context!
+		dtype = torch.float16,
+		load_in_4bit = False,
+		#token = "hf_...", # use one if using gated models like meta-llama/Llama-2-7b-hf
 	)
 
 	model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.bfloat16)
+	model = patch_model(model)
 	model.cuda()
 
 	my_wav_file_is = input_path
