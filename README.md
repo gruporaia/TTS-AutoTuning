@@ -9,8 +9,7 @@ Pensando nisso, este projeto propõe-se a facilitar esse modelo de negócio ao d
 - Exemplo de fine-tuning com o modelo Orpheus-TTS em língua inglesa.
 - Interface interativa desenvolvida em Streamlit, que pode ser usada para manipular, em alto nível, os componentes citados acima.
 
-**Os três primeiros itens dessa lista estão presentes para uso direto da comunidade no repositório [TTS_Utils](https://github.com/gruporaia/TTS-Utils).
-**
+**Os três primeiros itens dessa lista estão presentes para uso direto da comunidade no repositório [TTS_Utils](https://github.com/gruporaia/TTS-Utils).**
 
 ## ⚙️ Funcionamento
 A partir do nosso [TTS_Utils](https://github.com/gruporaia/TTS-Utils), conseguimos transformar qualquer conjunto de áudios não processados em um dataset pronto para ser utilizado para treinar um modelo de TTS. Utilizando-se disso, elaboramos um pipeline de finetuning automático, através de uma interface em Streamlit, de dois modelos de TTS: o [xTTS-v2](https://huggingface.co/coqui/XTTS-v2) e o [Orpheus-TTS](https://github.com/canopyai/Orpheus-TTS).
