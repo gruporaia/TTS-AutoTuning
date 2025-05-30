@@ -97,9 +97,9 @@ st.divider()
 
 st.subheader("Treine seu Modelo")
 st.write(
-    "Envie arquivos de áudio de uma única pessoa para treinar um modelo de fala personalizado. "/
-    "O modelo será treinado para reproduzir a voz dessa pessoa com precisão e você poderá gerar áudio com ele."/
-    "Recomendamos que escolha áudios com boa qualidade e sem ruídos da voz isolada dessa pessoa. " 
+    "Envie arquivos de áudio de uma única pessoa para treinar um modelo de fala personalizado. "
+    "O modelo será treinado para reproduzir a voz dessa pessoa com precisão e você poderá gerar áudio com ele. "
+    "Recomendamos que escolha áudios com boa qualidade e sem ruídos da voz isolada dessa pessoa." 
     )
     
 uploaded_files = st.file_uploader(
@@ -209,7 +209,7 @@ if st.button("Iniciar Ajuste Fino", key="fine_tune"):
                 shutil.rmtree(input_dir)  
 
         with st.spinner("Fazendo ajuste fino no modelo"):
-            print(run.finetune(speaker_name, avaliables_models[model_to_tuning], int(avaliables_durations[duration_to_tuning]), float(avaliables_learning[learning_to_tuning]), inputType))
+            print(run.finetune(speaker_name, avaliables_models[model_to_tuning], (avaliables_durations[duration_to_tuning]), (avaliables_learning[learning_to_tuning]), inputType))
             st.success("Ajuste fino concluído!")
 
             #apagar a pasta de dataset criada
@@ -226,7 +226,7 @@ st.divider()
 ###### Inferência
 st.subheader("Gerar Áudio")
 
-st.write("Selecione um modelo treinado e insira o texto para gerar o áudio correspondente. "/
+st.write("Selecione um modelo treinado e insira o texto para gerar o áudio correspondente. "
     "Caso seu modelo personalizado não esteja aparecendo entre as opções, recarregue a página."
     )
 
@@ -349,10 +349,12 @@ if st.button("Gerar Áudio", key="generate_audio"):
             )
 
             metrics_df = pd.DataFrame(
-                {"Metric": metrics.keys(), "Score": metrics.values()}
+                {"Metrica": metrics.keys(), "Pontuação": metrics.values()}
             )
 
-            st.subheader("Audio-quality metrics")
+            metrics_df.index = metrics_df.index + 1 
+
+            st.subheader("Métricas de qualidade de áudio")
             st.table(metrics_df)
     else:
         st.warning("Por favor, insira um texto para gerar o áudio.")

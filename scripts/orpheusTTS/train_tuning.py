@@ -2,6 +2,7 @@
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
+import argparse
 import torch
 import locale
 import torchaudio.transforms as T
@@ -222,3 +223,19 @@ def finetune(audio_path: str, model_output_path: str, duration: int, learning_ra
 
     model.save_pretrained(model_output_path)
     tokenizer.save_pretrained(model_output_path)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Script de Fine-tuning - OrpheusTTS")
+    parser.add_argument("--audio_path", type=str, required=True)
+
+    parser.add_argument("--model_output_path", type=str, required=True)
+
+    parser.add_argument("--duration", type=str, required=True)
+
+    parser.add_argument("--learning_rate", type=str, required=True)
+
+    parser.add_argument("--inputType", type=str, required=True)
+
+    args = parser.parse_args()
+
+    finetune(args.audio_path, args.model_output_path, int(args.duration), float(args.learning_rate), args.inputType)

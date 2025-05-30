@@ -30,7 +30,6 @@ Recebe:
     - Tipo de input
 '''
 def finetune(model_name, model_to_tuning, duration_to_tuning, learning_to_tuning, inputType):
-
     if inputType == "audio":
         input_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'audio_transcription'))
     else:
@@ -38,9 +37,23 @@ def finetune(model_name, model_to_tuning, duration_to_tuning, learning_to_tuning
     output_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'modelos', f'{model_name}'))
 
     if model_to_tuning == "xTTS-v2":
+        duration_to_tuning = int(duration_to_tuning)
+        learning_to_tuning = float(learning_to_tuning)
         result = xtts_finetune(input_path, output_path, duration_to_tuning, learning_to_tuning)
     elif model_to_tuning == "orpheusTTS":
-        result = orpheus_finetune(input_path, output_path, duration_to_tuning, learning_to_tuning, inputType)
+        finetune_orpheus_path = os.path.join(orpheus_path, "train_tuning.py")
+
+        cmd = [
+            sys.executable,
+            finetune_orpheus_path,
+            "--audio_path", input_path,
+            "--model_output_path", output_path,
+            "--duration", duration_to_tuning,
+            "--learning_rate", learning_to_tuning,
+            "--inputType", inputType
+        ]
+
+        result = subprocess.run(cmd, check=True, capture_output=True, text=True)
 
     return result
 
@@ -72,7 +85,6 @@ def synthesize(text: str, model_path: str, model_type: str):
         ]
 
         subprocess.run(cmd, check=True, capture_output=True, text=True)
-        #orpheus_synthesize(text, input_path, output_path)
         audio_path = f"{output_path}/OutputTTSOrpheus.wav"
 
     return audio_path
@@ -101,7 +113,7 @@ def evaluate_audio_metrics(
     )
 
     return {
-        "UTMOS (Naturality)"  : round(utmos_score, 3),
-        "CER (Pronunciation)" : round(cer_score, 3),
-        "SECS (Similarity)"   : secs_score if secs_score == "N/A" else round(secs_score, 3),
+        "UTMOS (Naturalidade da voz)"  : round(utmos_score, 3),
+        "CER (Pronúncia)" : round(cer_score, 3),
+        "SECS (Fidelidade com voz original)"   : secs_score if secs_score == "N/A" else round(secs_score, 3),
     }
