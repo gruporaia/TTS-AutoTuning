@@ -164,10 +164,8 @@ if __name__ == "__main__":
 
     parser.add_argument("--model_path", type=str, required=True)
 
-	parser.add_argument("--audio_output_path", type=str, required=True)
-
     parser.add_argument("--audio_output_path", type=str, required=True)
 
     args = parser.parse_args()
 
-    realizar_sintese_pretreinado(args.text, args.model_path, args.audio)
+    synthesize(args.text, args.model_path, args.audio_output_path)
