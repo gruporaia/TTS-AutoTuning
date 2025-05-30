@@ -1,6 +1,7 @@
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"  
 
+import argparse
 import torch
 import locale
 import torchaudio.transforms as T
@@ -36,7 +37,6 @@ def synthesize(text: str, model_path: str, audio_output_path: str):
 	chosen_voice = None # None for single-speaker
 
 	#@title Run Inference
-
 
 	FastLanguageModel.for_inference(model) # Enable native 2x faster inference
 
@@ -74,6 +74,7 @@ def synthesize(text: str, model_path: str, audio_output_path: str):
 
 	input_ids = all_padded_tensors.to("cuda")
 	attention_mask = all_attention_masks.to("cuda")
+
 	generated_ids = model.generate(
 		input_ids=input_ids,
 		attention_mask=attention_mask,
@@ -156,3 +157,15 @@ def synthesize(text: str, model_path: str, audio_output_path: str):
 	del my_samples,samples
 
 	return f"{audio_output_path}/OutputTTSOrpheus.wav"
+
+if __name__ == "__main__":
+	parser = argparse.ArgumentParser(description="Script de síntese - OrpheusTTS")
+	parser.add_argument("--text", type=str, required=True)
+
+    parser.add_argument("--model_path", type=str, required=True)
+
+    parser.add_argument("--audio_output_path", type=str, required=True)
+
+    args = parser.parse_args()
+
+    synthesize(args.text, args.model_path, args.audio_output_path)

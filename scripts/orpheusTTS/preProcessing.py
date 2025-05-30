@@ -9,9 +9,8 @@ import glob
 
 
 def create_dataset(base_dir):
-    csv_path = glob.glob(os.path.join(base_dir, "*.csv"))[1]
+    csv_path = glob.glob(os.path.join(base_dir, "*.csv"))[0]
     audio_dir = os.path.join(base_dir, "wavs")
-    print("diretorio base: " + base_dir + " " + csv_path + " " + audio_dir)
 
     df = pd.read_csv(csv_path, sep="|")
     df["audio"] = df["ID"].apply(lambda x: os.path.join(audio_dir, x + ".wav"))
@@ -24,7 +23,5 @@ def create_dataset(base_dir):
     dataset = Dataset.from_pandas(df)
     dataset = dataset.cast_column("audio", Audio())
     dataset = dataset.cast_column("audio", Audio(sampling_rate=16000))
-
-    print(dataset[0])
 
     return dataset

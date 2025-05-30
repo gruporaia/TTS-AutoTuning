@@ -42,12 +42,6 @@ def finetune(model_name, model_to_tuning, duration_to_tuning, learning_to_tuning
     elif model_to_tuning == "orpheusTTS":
         result = orpheus_finetune(input_path, output_path, duration_to_tuning, learning_to_tuning, inputType)
 
-    csv_modelos = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'models.csv'))
-    with open(csv_modelos, "a") as csv_modelos:
-        csv_writer = csv.writer(csv_modelos, delimiter=',')
-        csv_writer.writerow([model_name, output_path, model_to_tuning, 0.0])
-
-    print(result)
     return result
 
 '''

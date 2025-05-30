@@ -1,6 +1,7 @@
 # Fine-tuning do Orpheus TTS
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"  
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
 import torch
 import locale
 import torchaudio.transforms as T
@@ -12,7 +13,7 @@ import time
 import preProcessing as pre
 
 from snac import SNAC
-from transformers import TrainingArguments,Trainer,DataCollatorForSeq2Seq
+from transformers import AutoModelForCausalLM, Trainer, TrainingArguments, AutoTokenizer
 from unsloth import is_bfloat16_supported
 from datasets import load_dataset, load_from_disk
 from unsloth import FastLanguageModel
@@ -31,10 +32,7 @@ def finetune(audio_path: str, model_output_path: str, duration: int, learning_ra
         "80": 4
     }
 
-    if inputType == "audio":
-        dataset = pre.create_dataset(audio_path)
-    else:
-        dataset = load_from_disk(audio_path)
+    dataset = pre.create_dataset(audio_path)
 
     dtype = None # None for auto detection. Float16 for Tesla T4, V100, Bfloat16 for Ampere+
     load_in_4bit = True # Use 4bit quantization to reduce memory usage. Can be False.
@@ -62,8 +60,6 @@ def finetune(audio_path: str, model_output_path: str, duration: int, learning_ra
     )
 
     # Tokenização das amostras do dataset
-
-    print(dataset[1])
 
     locale.getpreferredencoding = lambda: "UTF-8"
     ds_sample_rate = dataset[0]["audio"]["sampling_rate"]
@@ -168,10 +164,6 @@ def finetune(audio_path: str, model_output_path: str, duration: int, learning_ra
         # Determine whether to include the source field
         text_prompt = f"{example['source']}: {example['text']}" if "source" in example else example["text"]
 
-        #Ignore Invalid text prompts
-        # if not isinstance(text_prompt, str) or text_prompt.strip() == "":
-        #     return None
-
         text_ids = tokenizer.encode(text_prompt, add_special_tokens=True)
         text_ids.append(end_of_text)
 
@@ -230,11 +222,3 @@ def finetune(audio_path: str, model_output_path: str, duration: int, learning_ra
 
     model.save_pretrained(model_output_path)
     tokenizer.save_pretrained(model_output_path)
-
-    # Exclui os arquivos cache que são gerados na pasta do dataset
-    if inputType == "zip":
-        for file_name in os.listdir(audio_path):
-            full_path = os.path.join(audio_path, file_name)
-        
-            if os.path.isfile(full_path) and file_name.startswith("cache"):
-                os.remove(full_path)
