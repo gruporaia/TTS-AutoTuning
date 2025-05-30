@@ -162,10 +162,10 @@ if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="Script de síntese - OrpheusTTS")
 	parser.add_argument("--text", type=str, required=True)
 
-    parser.add_argument("--model_path", type=str, required=True)
+	parser.add_argument("--model_path", type=str, required=True)
 
-    parser.add_argument("--audio_output_path", type=str, required=True)
+	parser.add_argument("--audio_output_path", type=str, required=True)
 
-    args = parser.parse_args()
+	args = parser.parse_args()
 
-    synthesize(args.text, args.model_path, args.audio_output_path)
+	synthesize(args.text, args.model_path, args.audio_output_path)
