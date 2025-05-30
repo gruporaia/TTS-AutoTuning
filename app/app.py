@@ -18,7 +18,7 @@ from pre_trained import pre_trained as orpheus_pre_trained
 
 # ─────────────── page config ───────────────
 st.set_page_config(
-    page_title="Fine-tune & Generate Audio",
+    page_title="",
     page_icon=":microphone:",
     layout="centered",
 )
@@ -90,33 +90,21 @@ def fake_progress():
         p.progress(i / 20)
     p.empty()
 
-
-# criar csv com dados do modelos
-# with open("models.csv", "w") as f:
-#     csv_writer = csv.writer(f, delimiter=",")
-#     csv_writer.writerow(["nome", "path", "model_type", "score"])
-#     pasta_modelos = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'modelos'))
-#     os.makedirs(pasta_modelos, exist_ok=True)
-#     models = [
-#         (nome, 
-#         os.path.join(pasta_modelos, nome), 
-#         "xTTs-v2" if any(f.endswith(".pth") for f in os.listdir(os.path.join(pasta_modelos, nome))) else "orpheusTTS", # confere se é um modelo xtts ou orpheus dependendo da terminação do arquivo do modelo
-#         0.0)
-#         for nome in os.listdir(pasta_modelos)
-#     ]
-#     for modelo in models:
-#         csv_writer.writerow(modelo)
-    
-
 # ─────────────── UI ───────────────
 ###### Fine-tuning
-st.title("Fine-tune & Generate Audio Demo")
+st.title("Finetuning Automatizado & Geração de Fala")
 st.divider()
 
-st.subheader("Fine-tune Model")
+st.subheader("Treine seu Modelo")
+st.write(
+    "Envie arquivos de áudio de uma única pessoa para treinar um modelo de fala personalizado. "/
+    "O modelo será treinado para reproduzir a voz dessa pessoa com precisão e você poderá gerar áudio com ele."/
+    "Recomendamos que escolha áudios com boa qualidade e sem ruídos da voz isolada dessa pessoa. " 
+    )
+    
 uploaded_files = st.file_uploader(
-    "Envie arquivos de áudio para ajuste fino:",
-    type=["wav", "mp3"],
+    "Envie arquivos de áudio para ajuste fino em formato WAV, MP3 ou ZIP (com vários arquivos dentro).",
+    type=["wav", "mp3", ".zip"],
     accept_multiple_files=True,
     key="fine_tune_files",
 )
@@ -161,9 +149,29 @@ if st.button("Iniciar Ajuste Fino", key="fine_tune"):
             filename = uploaded_file.name
             file_path = os.path.join(input_audio_path, filename)
 
-            inputType = "audio"
-            with open(file_path, "wb") as f:
-                f.write(uploaded_file.read())
+            if filename.endswith('.zip'):
+                inputType = "zip"
+                # Cria um caminho para a pasta com o mesmo nome do zip (sem extensão)
+                unzip_folder_name = speaker_name
+                unzip_folder_path = os.path.join(input_audio_path, unzip_folder_name)
+                os.makedirs(unzip_folder_path, exist_ok=True)
+
+                # Salva o zip temporariamente
+                with open(file_path, "wb") as f:
+                    f.write(uploaded_file.read())
+
+                # Descompacta
+                with zipfile.ZipFile(file_path, 'r') as zip_ref:
+                    zip_ref.extractall(unzip_folder_path)
+
+                # Remove o zip depois, se quiser
+                os.remove(file_path)
+                st.success(f"Arquivo {filename} descompactado em {unzip_folder_path}")
+
+            else:
+                inputType = "audio"
+                with open(file_path, "wb") as f:
+                    f.write(uploaded_file.read())
 
             if exemple_voice_path is None:                      # <<< guarda o 1º arquivo
                 exemple_voice_path = file_path
@@ -217,6 +225,11 @@ st.divider()
 
 ###### Inferência
 st.subheader("Gerar Áudio")
+
+st.write("Selecione um modelo treinado e insira o texto para gerar o áudio correspondente. "/
+    "Caso seu modelo personalizado não esteja aparecendo entre as opções, recarregue a página."
+    )
+
 text_input = st.text_area(
     "Digite o texto para gerar o áudio:",
     placeholder="Ex.: Olá, seja bem-vindo…",
@@ -241,15 +254,6 @@ for nome in os.listdir(pasta_modelos):
     
     models[nome] = path
     models_type[nome] = tipo
-
-#carrega opções de modelo do csv
-# with open("models.csv") as csv_modelos:
-#     csv_reader = csv.reader(csv_modelos, delimiter=',')
-#     next(csv_reader) #cabecalho
-#     for row in csv_reader:
-#         models[row[0].strip()] = row[1].strip()
-#         models_type[row[0].strip()] = row[2].strip()
-#         #model_evals[row[0].strip()] = row[3].strip()
 
 
 ###### Inferência de modelos
