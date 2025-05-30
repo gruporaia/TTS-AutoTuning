@@ -18,7 +18,7 @@ from pre_trained import pre_trained as orpheus_pre_trained
 
 # ─────────────── page config ───────────────
 st.set_page_config(
-    page_title="Fine-tune & Generate Audio",
+    page_title="",
     page_icon=":microphone:",
     layout="centered",
 )
@@ -90,32 +90,20 @@ def fake_progress():
         p.progress(i / 20)
     p.empty()
 
-
-# criar csv com dados do modelos
-# with open("models.csv", "w") as f:
-#     csv_writer = csv.writer(f, delimiter=",")
-#     csv_writer.writerow(["nome", "path", "model_type", "score"])
-#     pasta_modelos = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'modelos'))
-#     os.makedirs(pasta_modelos, exist_ok=True)
-#     models = [
-#         (nome, 
-#         os.path.join(pasta_modelos, nome), 
-#         "xTTs-v2" if any(f.endswith(".pth") for f in os.listdir(os.path.join(pasta_modelos, nome))) else "orpheusTTS", # confere se é um modelo xtts ou orpheus dependendo da terminação do arquivo do modelo
-#         0.0)
-#         for nome in os.listdir(pasta_modelos)
-#     ]
-#     for modelo in models:
-#         csv_writer.writerow(modelo)
-    
-
 # ─────────────── UI ───────────────
 ###### Fine-tuning
-st.title("Fine-tune & Generate Audio Demo")
+st.title("Finetuning Automatizado & Geração de Fala")
 st.divider()
 
-st.subheader("Fine-tune Model")
+st.subheader("Treine seu Modelo")
+st.write(
+    "Envie arquivos de áudio de uma única pessoa para treinar um modelo de fala personalizado. "/
+    "O modelo será treinado para reproduzir a voz dessa pessoa com precisão e você poderá gerar áudio com ele."/
+    "Recomendamos que escolha áudios com boa qualidade e sem ruídos da voz isolada dessa pessoa. " 
+    )
+    
 uploaded_files = st.file_uploader(
-    "Envie arquivos de áudio para ajuste fino:",
+    "Envie arquivos de áudio para ajuste fino em formato WAV, MP3 ou ZIP (com vários arquivos dentro).",
     type=["wav", "mp3", ".zip"],
     accept_multiple_files=True,
     key="fine_tune_files",
@@ -237,6 +225,11 @@ st.divider()
 
 ###### Inferência
 st.subheader("Gerar Áudio")
+
+st.write("Selecione um modelo treinado e insira o texto para gerar o áudio correspondente. "/
+    "Caso seu modelo personalizado não esteja aparecendo entre as opções, recarregue a página."
+    )
+
 text_input = st.text_area(
     "Digite o texto para gerar o áudio:",
     placeholder="Ex.: Olá, seja bem-vindo…",
@@ -261,15 +254,6 @@ for nome in os.listdir(pasta_modelos):
     
     models[nome] = path
     models_type[nome] = tipo
-
-#carrega opções de modelo do csv
-# with open("models.csv") as csv_modelos:
-#     csv_reader = csv.reader(csv_modelos, delimiter=',')
-#     next(csv_reader) #cabecalho
-#     for row in csv_reader:
-#         models[row[0].strip()] = row[1].strip()
-#         models_type[row[0].strip()] = row[2].strip()
-#         #model_evals[row[0].strip()] = row[3].strip()
 
 
 ###### Inferência de modelos

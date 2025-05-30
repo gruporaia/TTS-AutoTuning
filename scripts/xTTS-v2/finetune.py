@@ -39,7 +39,6 @@ def finetune(dataset_path: str, output_path: str, epochs: int, lr:float):
     base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "audio_transcription")
     csv_files = glob.glob(os.path.join(base_dir, "*.csv"))
     csv_path = os.path.join(base_dir, max(csv_files, key=os.path.getctime))
-    #csv_path = glob.glob(os.path.join(base_dir, "*.csv"))[0] # aqui tem que achar o csv certo, não só o primeiro
     csv_filename = os.path.basename(csv_path)
     
     config_dataset = BaseDatasetConfig(
