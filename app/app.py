@@ -116,7 +116,7 @@ st.divider()
 st.subheader("Fine-tune Model")
 uploaded_files = st.file_uploader(
     "Envie arquivos de áudio para ajuste fino:",
-    type=["wav", "mp3", ".zip"],
+    type=["wav", "mp3"],
     accept_multiple_files=True,
     key="fine_tune_files",
 )
@@ -161,29 +161,9 @@ if st.button("Iniciar Ajuste Fino", key="fine_tune"):
             filename = uploaded_file.name
             file_path = os.path.join(input_audio_path, filename)
 
-            if filename.endswith('.zip'):
-                inputType = "zip"
-                # Cria um caminho para a pasta com o mesmo nome do zip (sem extensão)
-                unzip_folder_name = speaker_name
-                unzip_folder_path = os.path.join(input_audio_path, unzip_folder_name)
-                os.makedirs(unzip_folder_path, exist_ok=True)
-
-                # Salva o zip temporariamente
-                with open(file_path, "wb") as f:
-                    f.write(uploaded_file.read())
-
-                # Descompacta
-                with zipfile.ZipFile(file_path, 'r') as zip_ref:
-                    zip_ref.extractall(unzip_folder_path)
-
-                # Remove o zip depois, se quiser
-                os.remove(file_path)
-                st.success(f"Arquivo {filename} descompactado em {unzip_folder_path}")
-
-            else:
-                inputType = "audio"
-                with open(file_path, "wb") as f:
-                    f.write(uploaded_file.read())
+            inputType = "audio"
+            with open(file_path, "wb") as f:
+                f.write(uploaded_file.read())
 
             if exemple_voice_path is None:                      # <<< guarda o 1º arquivo
                 exemple_voice_path = file_path
