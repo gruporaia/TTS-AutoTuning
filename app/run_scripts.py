@@ -60,7 +60,18 @@ def synthesize(text: str, model_path: str, model_type: str):
         xtts_synthesize(text, output_path, input_path)
         audio_path = f"{output_path}/output.wav"
     elif model_type == "orpheusTTS":
-        orpheus_synthesize(text, input_path, output_path)
+        synthesize_Orpheus_path = os.path.join(orpheus_path, "inference_tuning.py")
+
+        cmd = [
+            sys.executable,
+            synthesize_Orpheus_path,
+            "--text", text,
+            "--model_path", input_path,
+            "--audio_output_path", output_path
+        ]
+
+        subprocess.run(cmd, check=True, capture_output=True, text=True)
+        #orpheus_synthesize(text, input_path, output_path)
         audio_path = f"{output_path}/OutputTTSOrpheus.wav"
 
     return audio_path
