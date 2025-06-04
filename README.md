@@ -1,7 +1,5 @@
 # Automatizador de fine-tuning de modelos de síntese de voz para vozes únicas+
-Contratar famosos para usarem suas vozes em um projeto pode ser muito caro. No entanto, com as tecnologias de Machine Learning, é possível recriar vozes artificialmente, reduzindo custos, já que a empresa precisaria pagar apenas pelos direitos de uso, sem a necessidade de gravações diretas. Somado a isso, performar fine-tuning com dados da voz de uma única pessoa em um modelo de TTS pode resultar em melhores performances na recriação daquela voz em comparação a modelos generalistas.
-
-Pensando nisso, este projeto propõe-se a facilitar esse modelo de negócio ao desenvolver uma automação de fine-tuning para modelos de TTS. O projeto conta com:
+Modelos atuais permitem clonagem de voz de qualquer pessoa utilizando um áudio curto de referência. Entretanto, realizar finetuning do modelo para aquela voz, com mais exemplos, leva a uma clonagem mais realista. Pensando nisso, este projeto propõe-se a facilitar esse processo ao desenvolver uma automação de fine-tuning para modelos de TTS. O projeto conta com:
 - Gerador de datasets a partir de áudio brutos em língua portuguesa.
 - Normalizador de textos em língua portuguesa. (Aplicação que expande abreviações e reescreve símbolos de maneira extensa para que o modelo de voz seja capaz de transformar em áudio de maneira correta).
 - Avaliação dos resultados dos modelos através de métricas 
