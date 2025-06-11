@@ -38,7 +38,7 @@ def synthesize(text=None, output_path=None, run_path=None, audio_out_name="outpu
         config,
         speaker_wav=sample_path,
         gpt_cond_len=3,
-        language="en",
+        language="pt",
     )
 
     if not os.path.isabs(output_path):
