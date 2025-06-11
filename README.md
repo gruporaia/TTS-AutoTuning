@@ -20,8 +20,8 @@ Com os modelos treinados, permitimos, através da mesma interface, o uso deles p
 
 ### Clonando repositório
 ```bash
-git clone https://github.com/gruporaia/sintese-voz.git
-cd sintese-voz
+git clone https://github.com/gruporaia/TTS-AutoTuning.git
+cd TTS-AutoTuning
 ```
 
 ### Instalando dependências
