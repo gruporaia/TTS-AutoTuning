@@ -59,7 +59,7 @@ streamlit run app.py   #Abre a interface web
 | ![LogoRAIA](https://github.com/user-attachments/assets/ce3f8386-a900-43ff-af84-adce9c17abd2) |  Este projeto foi desenvolvido pelos membros do **RAIA (Rede de Avanço de Inteligência Artificial)**, uma iniciativa estudantil do Instituto de Ciências Matemáticas e de Computação (ICMC) da USP - São Carlos. Somos estudantes que compartilham o objetivo de criar soluções inovadoras utilizando inteligência artificial para impactar positivamente a sociedade. Para saber mais, acesse [nosso site](https://gruporaia.vercel.app/) ou [nosso Instagram](instagram.com/grupo.raia)! |
 |------------------|-------------------------------------------|
 
-Projeto feito em supervisão do Professor **Moacir Ponti** - [Site](https://sites.google.com/site/moacirponti/)
+**Projeto feito com supervisão do Professor Moacir Ponti - [Site](https://sites.google.com/site/moacirponti/)**
 
 ### Desenvolvedores
 - **Antonio Carlos** - [LinkedIn](https://www.linkedin.com/in/ant%C3%B4nio-carlos-micheli-b10bb4289/) | [GitHub](https://github.com/Antonioonet)
