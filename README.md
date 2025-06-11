@@ -25,6 +25,9 @@ cd TTS-AutoTuning
 ```
 
 ### Instalando dependências
+
+O repositório foi construído usando Python 3.11.11.
+
 Usando pip:
 ```bash
 pip install -r requirements.txt
