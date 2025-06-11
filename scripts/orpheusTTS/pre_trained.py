@@ -1,48 +1,6 @@
 # Síntese de áudio com Orpheus TTS pré-treinado e apenas
 # 1 amostra de áudio
 
-'''def pre_trained(input_path: str, output_path: str, text: str, transcript: str):
-	os.makedirs(output_path, exist_ok=True)
-
-	model_name = "canopylabs/orpheus-tts-0.1-pretrained"
-	device = "cuda" if torch.cuda.is_available() else "cpu"
-
-	tokenizer = AutoTokenizer.from_pretrained(model_name)
-
-	snac_model = SNAC.from_pretrained("hubertsiuzdak/snac_24khz")
-
-	model_path = snapshot_download(
-		repo_id=model_name,
-		allow_patterns=[
-			"config.json",
-			"*.safetensors",
-			"model.safetensors.index.json",
-		],
-		ignore_patterns=[
-			"optimizer.pt",
-			"pytorch_model.bin",
-			"training_args.bin",
-			"scheduler.pt",
-			"tokenizer.json",
-			"tokenizer_config.json",
-			"special_tokens_map.json",
-			"vocab.json",
-			"merges.txt",
-			"tokenizer.*"
-		],
-	)
-
-	model, tokenizerAux = FastLanguageModel.from_pretrained(
-		model_name=model_path,
-		max_seq_length=4096,
-		dtype=torch.float16,
-		load_in_4bit=False,
-	)
-
-	model.to(device)'''
-
-
-
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"  
 
@@ -95,15 +53,7 @@ def pre_trained(input_path: str, output_path: str, text: str, transcript: str):
 			"tokenizer.*"
 		]
 	)
-
-	'''model, tokenizer = FastLanguageModel.from_pretrained(
-		model_name = "../data/modelos/OrpheusTTS",
-		max_seq_length= 4096, # Choose any for long context!
-		dtype = torch.float16,
-		load_in_4bit = False,
-		#token = "hf_...", # use one if using gated models like meta-llama/Llama-2-7b-hf
-	)'''
-
+	
 	model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.bfloat16)
 	model.cuda()
 
@@ -187,16 +137,13 @@ def pre_trained(input_path: str, output_path: str, text: str, transcript: str):
 	with torch.no_grad():
 		generated_ids = model.generate(
 			input_ids=input_ids,
-			# attention_mask=attention_mask,
-			max_new_tokens=2000,
+			max_new_tokens=8192,
 			do_sample=True,
-			temperature=0.5,
-			# top_k=40,
-			top_p=0.9,
+			temperature=0.55,
+			top_p=0.95,
 			repetition_penalty=1.1,
 			num_return_sequences=1,
 			eos_token_id=128258,
-			# end_token_id=128009
 		)
 
 

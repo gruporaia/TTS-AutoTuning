@@ -1,5 +1,5 @@
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"  
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 import argparse
 import torch
@@ -26,7 +26,7 @@ def synthesize(text: str, model_path: str, audio_output_path: str):
 	snac_model = SNAC.from_pretrained("hubertsiuzdak/snac_24khz")
 	model, tokenizer = FastLanguageModel.from_pretrained(
 		model_name = model_path,
-		max_seq_length= 4096, # Choose any for long context!
+		max_seq_length= 8192, # Choose any for long context!
 		dtype = torch.float16,
 		load_in_4bit = False,
 		#token = "hf_...", # use one if using gated models like meta-llama/Llama-2-7b-hf
@@ -78,15 +78,17 @@ def synthesize(text: str, model_path: str, audio_output_path: str):
 	generated_ids = model.generate(
 		input_ids=input_ids,
 		attention_mask=attention_mask,
-		max_new_tokens=1200,
+		max_new_tokens=8192,
 		do_sample=True,
-		temperature=0.6,
+		temperature=0.55,
 		top_p=0.95,
 		repetition_penalty=1.1,
 		num_return_sequences=1,
 		eos_token_id=128258,
 		use_cache = True
 	)
+	print(prompts)
+
 	token_to_find = 128257
 	token_to_remove = 128258
 
@@ -158,7 +160,7 @@ def synthesize(text: str, model_path: str, audio_output_path: str):
 
 	return f"{audio_output_path}/OutputTTSOrpheus.wav"
 
-if __name__ == "__main__":
+'''if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="Script de síntese - OrpheusTTS")
 	parser.add_argument("--text", type=str, required=True)
 
@@ -168,4 +170,4 @@ if __name__ == "__main__":
 
 	args = parser.parse_args()
 
-	synthesize(args.text, args.model_path, args.audio_output_path)
+	synthesize(args.text, args.model_path, args.audio_output_path)'''

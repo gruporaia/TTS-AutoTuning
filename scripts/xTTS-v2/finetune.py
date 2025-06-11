@@ -256,3 +256,10 @@ def finetune(dataset_path: str, output_path: str, epochs: int, lr:float):
     shutil.rmtree(script_output_path, ignore_errors=True)
 
     return OUT_PATH + most_recent.name
+
+if __name__ == "__main__":
+    lr = 5e-6
+    epochs = 70
+    dataset_path = "/store/lucasouza/projetos/sintese_de_voz/data/audio_transcription"
+    output_path = "/store/lucasouza/projetos/sintese_de_voz/data/modelos/Caio"
+    finetune(dataset_path, output_path, epochs, lr )

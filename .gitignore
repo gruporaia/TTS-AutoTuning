@@ -1,10 +1,13 @@
 *.mp3
 *.wav
+*.png
 data/
 
 scripts/metrics/__pycache__/
+scripts/Metrics/
 scripts/orpheusTTS/__pycache__/
 scripts/xTTS-v2/__pycache__/
+scripts/xTTS-v2/plot.py
 app/__pycache__/
 scripts/xTTS-v2/run/
 unsloth_compiled_cache/ 

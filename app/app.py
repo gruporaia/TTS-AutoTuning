@@ -134,9 +134,9 @@ speaker_name = st.text_area(
     placeholder="Ex.: Clarice Lispector",
 )
 
-model_to_tuning = st.radio("Selecione o modelo para fine-tuning", avaliables_models.keys())
-duration_to_tuning = st.radio("Selecione o número de épocas/steps para fine-tuning", avaliables_durations.keys())
-learning_to_tuning = st.radio("Selecione a taxa de aprendizado", avaliables_learning.keys())
+#model_to_tuning = st.radio("Selecione o modelo para fine-tuning", avaliables_models.keys())
+#duration_to_tuning = st.radio("Selecione o número de épocas/steps para fine-tuning", avaliables_durations.keys())
+#learning_to_tuning = st.radio("Selecione a taxa de aprendizado", avaliables_learning.keys())
 
 exemple_voice_path = None                              
 
@@ -310,8 +310,9 @@ if st.button("Gerar Áudio", key="generate_audio"):
     audio_path = ""
     if text_input.strip():
         with st.spinner("Gerando áudio…"):
+            print(f'model: {model_select}')
             fake_progress()
-            normalized_text = normalize_text(text_input)
+            normalized_text = text_input
 
             output_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'gen'))
 
