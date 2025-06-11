@@ -6,7 +6,8 @@ from TTS.tts.configs.xtts_config import XttsConfig
 from TTS.tts.models.xtts import Xtts
 import torchaudio
 
-def synthesize(text=None, output_path=None, run_path=None):
+def synthesize(text=None, output_path=None, run_path=None, audio_out_name="output"):
+    print("Gerando áudio")
     model_path = config_path = sample_path = None
     if run_path:
         for filename in os.listdir(run_path):
@@ -19,7 +20,6 @@ def synthesize(text=None, output_path=None, run_path=None):
 
         if not model_path or not config_path or not sample_path:
             return 
-    
 
     config = XttsConfig()
     config.load_json(config_path)
@@ -46,12 +46,12 @@ def synthesize(text=None, output_path=None, run_path=None):
 
     os.makedirs(output_path, exist_ok=True)
     
-    output_path = os.path.join(output_path, "output.wav")
+    output_path = os.path.join(output_path, f"{audio_out_name}.wav")
     if os.path.exists(output_path):
         os.remove(output_path)
     
 
     torchaudio.save(output_path, torch.tensor(outputs['wav']).unsqueeze(0), 24000)
 
-    return f"{output_path}/output.wav"
+    return output_path
 

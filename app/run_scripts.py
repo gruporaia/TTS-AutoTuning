@@ -64,14 +64,14 @@ Recebe:
     - Path da pasta contendo o modelo
     - Tipo do modelo (xTTs, Orpheus)
 '''
-def synthesize(text: str, model_path: str, model_type: str):
+def synthesize(text: str, model_path: str, model_type: str, audio_name : str = "output"):
     input_path = model_path
     output_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'gen'))
     audio_path = ""
 
     
     if model_type == "xTTS-v2":
-        xtts_synthesize(text, output_path, input_path)
+        xtts_synthesize(text, output_path, input_path, audio_out_name=audio_name)
         audio_path = f"{output_path}/output.wav"
     elif model_type == "orpheusTTS":
         synthesize_Orpheus_path = os.path.join(orpheus_path, "inference_tuning.py")
