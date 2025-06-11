@@ -14,7 +14,7 @@ A partir do nosso [TTS_Utils](https://github.com/gruporaia/TTS-Utils), conseguim
 
 Com os modelos treinados, permitimos, através da mesma interface, o uso deles para inferência.
 
-![Image](https://github.com/user-attachments/assets/57b72fc1-cf98-4f85-8c1b-28526fb3dffe)
+![Image](https://github.com/user-attachments/assets/d705ce5c-9750-4c6d-9d74-d16732735f38)
 
 ## 🛠️ Como rodar
 
