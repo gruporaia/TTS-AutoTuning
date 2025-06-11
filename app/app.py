@@ -97,9 +97,9 @@ st.divider()
 
 st.subheader("Treine seu Modelo")
 st.write(
-    "Envie arquivos de áudio de uma única pessoa para treinar um modelo de fala personalizado. "
-    "O modelo será treinado para reproduzir a voz dessa pessoa com precisão e você poderá gerar áudio com ele. "
-    "Recomendamos que escolha áudios com boa qualidade e sem ruídos da voz isolada dessa pessoa." 
+    "Envie arquivos de áudio para treinar um modelo de fala personalizado. "
+    "O modelo será treinado para reproduzir fielmente as vozes informadas e você poderá gerar áudio com ele. "
+    "Recomendamos que escolha áudios com boa qualidade e sem ruídos, isolando as vozes desejadas." 
     )
     
 uploaded_files = st.file_uploader(
@@ -130,13 +130,13 @@ avaliables_learning = {
 }
 
 speaker_name = st.text_area(
-    "Digite o nome do falante:",
-    placeholder="Ex.: Clarice Lispector",
+    "Digite o nome do modelo:",
+    placeholder="Ex.: Sotaque_Carioca",
 )
 
-#model_to_tuning = st.radio("Selecione o modelo para fine-tuning", avaliables_models.keys())
-#duration_to_tuning = st.radio("Selecione o número de épocas/steps para fine-tuning", avaliables_durations.keys())
-#learning_to_tuning = st.radio("Selecione a taxa de aprendizado", avaliables_learning.keys())
+model_to_tuning = st.radio("Selecione o modelo para fine-tuning", avaliables_models.keys())
+duration_to_tuning = st.radio("Selecione o número de épocas/steps para fine-tuning", avaliables_durations.keys())
+learning_to_tuning = st.radio("Selecione a taxa de aprendizado", avaliables_learning.keys())
 
 exemple_voice_path = None                              
 
