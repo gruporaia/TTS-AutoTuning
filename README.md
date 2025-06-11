@@ -14,7 +14,7 @@ A partir do nosso [TTS_Utils](https://github.com/gruporaia/TTS-Utils), conseguim
 
 Com os modelos treinados, permitimos, através da mesma interface, o uso deles para inferência.
 
-[diagrama]
+![Image](https://github.com/user-attachments/assets/57b72fc1-cf98-4f85-8c1b-28526fb3dffe)
 
 ## 🛠️ Como rodar
 
@@ -47,7 +47,8 @@ streamlit run app.py   #Abre a interface web
 ```
 
 ## 📊 Interface
- ![Image](https://github.com/user-attachments/assets/3edadd51-ea6e-449b-b6a6-78e29286ce38)
+![Image](https://github.com/user-attachments/assets/4d18c557-428e-4d61-9318-ba346733dbad)
+![Image](https://github.com/user-attachments/assets/7c1f1769-9dc1-4298-ae93-3ef7fb271fbb)
 
 ### Próximos passos 
 - Utilizar melhores modelos para clonagem de voz.
