@@ -47,8 +47,8 @@ streamlit run app.py   #Abre a interface web
 ```
 
 ## 📊 Interface
-![Image](https://github.com/user-attachments/assets/4d18c557-428e-4d61-9318-ba346733dbad)
 ![Image](https://github.com/user-attachments/assets/7c1f1769-9dc1-4298-ae93-3ef7fb271fbb)
+![Image](https://github.com/user-attachments/assets/4d18c557-428e-4d61-9318-ba346733dbad)
 
 ### Próximos passos 
 - Utilizar melhores modelos para clonagem de voz.
