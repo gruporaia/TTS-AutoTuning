@@ -2,7 +2,7 @@
 Modelos atuais permitem clonagem de voz de qualquer pessoa utilizando um áudio curto de referência. Entretanto, algumas características podem não ser tão bem reproduzidas, como sotaques, pronúncia de vocabulário específico, timbre, efeitos da voz, etc. Para contornar esse problema, pode-se fazer finetuning desses modelos, permitindo que o modelo aprenda com mais exemplos. Entretanto, esse processo é muito trabalhoso e envolve várias subtarerfas. Pensando nisso, este projeto propõe-se a simplificar esse cenário ao desenvolver uma automação de fine-tuning para modelos de TTS. O projeto conta com:
 - Gerador de datasets a partir de áudio brutos em língua portuguesa.
 - Normalizador de textos em língua portuguesa. (Aplicação que expande abreviações e reescreve símbolos de maneira extensa para que o modelo de voz seja capaz de gerar fala de maneira correta).
-- Avaliação dos resultados dos modelos através de métricas 
+- Avaliação dos resultados dos modelos através das métricas UTMOS, CER e SECS, que analisam a qualidade da fala gerada em termos de conteúdo falado e naturalidade da voz sintetizada.
 - Exemplo de fine-tuning com o modelo XTTS-v2 em língua portuguesa.
 - Exemplo de fine-tuning com o modelo Orpheus-TTS em língua inglesa.
 - Interface interativa desenvolvida em Streamlit, que pode ser usada para manipular, em alto nível, os componentes citados acima.
